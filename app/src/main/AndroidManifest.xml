@@ -27,6 +27,7 @@
         <activity android:name=".login_screen.guide_login_activity"></activity>
         <activity android:name=".login_screen.signup_acivity"></activity>
         <activity android:name=".login_screen.tourist_login_activity"></activity>
+        <activity android:name=".main_screen.tour_main_screen_activity"></activity>
     </application>
 
 </manifest>
