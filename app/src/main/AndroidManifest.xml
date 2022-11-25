@@ -24,7 +24,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".guide_login_activity"></activity>
+        <activity android:name=".login_screen.guide_login_activity"></activity>
+        <activity android:name=".login_screen.signup_acivity"></activity>
+        <activity android:name=".login_screen.tourist_login_activity"></activity>
     </application>
 
 </manifest>

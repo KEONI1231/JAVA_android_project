@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.final_java_project.login_screen.guide_login_activity;
+import com.example.final_java_project.login_screen.signup_acivity;
+import com.example.final_java_project.login_screen.tourist_login_activity;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -20,8 +22,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentGuideLogin);
                 break;
             case R.id.login_tourist_btn:
-                Intent intentTouristLogin = new Intent(getApplicationContext(), guide_login_activity.class);
+                Intent intentTouristLogin = new Intent(getApplicationContext(), tourist_login_activity.class);
                 startActivity(intentTouristLogin);
+                break;
+            case R.id.sign_up_btn:
+                Intent intentSignUp = new Intent(getApplicationContext(), signup_acivity.class);
+                startActivity(intentSignUp);
                 break;
         }
     }
