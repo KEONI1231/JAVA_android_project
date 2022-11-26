@@ -20,7 +20,8 @@
             android:layout_weight="1"
             android:text="ID : "
             android:textSize="24dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#808080"/>
         <EditText
             android:id="@+id/id_editText1"
             android:layout_width="wrap_content"
@@ -44,7 +45,8 @@
             android:layout_weight="1"
             android:text="PW : "
             android:textSize="24dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#808080"/>
         <EditText
             android:id="@+id/pw_editText2"
             android:layout_width="wrap_content"

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/edit_text_shape"
+    android:paddingBottom="8dp"
+    android:id="@+id/gravity_set"
+    >
+
+
+        <ImageView
+            android:id="@+id/mainImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/profile_image_round_border"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/me">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:orientation="vertical"
+            android:paddingLeft="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="60계치"
+                    android:textColor="#36474f"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/body_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" / 리뷰1+ / 사장님댓글1+ / 100m"
+                    android:textColor="#36474f"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:paddingTop="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>

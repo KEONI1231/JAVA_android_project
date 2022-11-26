@@ -1,6 +1,7 @@
 package com.example.final_java_project.login_screen;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -14,6 +15,8 @@ public class guide_login_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guide_login);
         getSupportActionBar().setTitle("가이드 로그인");
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.login_appbar);
     }
 }

@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.final_java_project.R;
@@ -21,11 +21,10 @@ public class tourist_login_activity extends AppCompatActivity {
         //앱바 텍스트
         getSupportActionBar().setTitle("여행객 로그인");
         // id, pw 텍스트 색조정
-        TextView text1,text2;
-        text1 = (TextView) findViewById(R.id.id_text);
-        text2 = (TextView) findViewById(R.id.pw_text);
-        text1.setTextColor(Color.parseColor("#808080"));
-        text2.setTextColor(Color.parseColor("#808080"));
+      
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.login_appbar);
 
     }
     public void onButtonClick(View view) {
