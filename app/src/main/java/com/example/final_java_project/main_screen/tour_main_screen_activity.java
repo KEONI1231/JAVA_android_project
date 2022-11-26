@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.media.session.PlaybackState;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,12 +27,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class tour_main_screen_activity extends AppCompatActivity {
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tour_main_screen);
-        getSupportActionBar().setTitle("메인화면");
+        getSupportActionBar().setTitle("존나하기싫다 왜냐하면 존나 하기 싫기 때문이다");
         TextView myProfileText, userNameText, userRegionText, userPeriodText, guideListText;
         myProfileText = (TextView) findViewById(R.id.my_profile);
         userNameText = (TextView) findViewById(R.id.user_name_text1);
@@ -51,14 +52,12 @@ public class tour_main_screen_activity extends AppCompatActivity {
 
         String[] title = {"응우옌 꾸엉 휘 김(김건휘)", "응우옌 준니엔 조(조발캔)", "응우옌 꾹 형궈(김발칸)",
         "응우옌 슈 창훼이(밤톨이)","응우옌 쯔 캐박(밤톨이 견주)"};
-        String[] body_1 = { " 별점 : 4.7 / 가이드 수 + 14", " 별졈:0.01 / 가이드 수 + 102",
-                " 별졈:4.9 / 가이드 수 + 1024", " 별졈:4.9 / 가이드 수 + 14", " 별졈:4.7 / 가이드 수 + 14"};
+        String[] body_1 = { " 별점 : 4.7 / 가이드 수 + 14", " 별점:0.01 / 가이드 수 + 102",
+                " 별점:4.9 / 가이드 수 + 1024", " 별점:4.9 / 가이드 수 + 14", " 별점:4.7 / 가이드 수 + 14"};
         int[] id = {R.drawable.me,R.drawable.jo,R.drawable.kkuk,R.drawable.bam,R.drawable.bam };
         ArrayList<CustomListView.ListData> listViewData = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
             CustomListView.ListData listData = new CustomListView.ListData();
-
-
             listData.mainImage =id[i];
             listData.title = title[i];
             listData.body_1 = body_1[i];
@@ -77,7 +76,15 @@ public class tour_main_screen_activity extends AppCompatActivity {
 
             }
         });
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                listView.requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
     }
+
 }
 
 
