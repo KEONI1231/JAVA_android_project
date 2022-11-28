@@ -2,10 +2,12 @@ package com.example.final_java_project.main_screen;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.session.PlaybackState;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -29,6 +31,8 @@ import androidx.fragment.app.FragmentManager;
 import com.example.final_java_project.R;
 import com.example.final_java_project.login_screen.guide_login_activity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +88,9 @@ public class tour_main_screen_activity extends AppCompatActivity {
                 "왈왈!!!왈왈와로알!!!와라라랄!!!왈!", "밤톨아 밥먹자~"};
         int[] id = {R.drawable.me, R.drawable.jo, R.drawable.kkuk, R.drawable.bam, R.drawable.bam};
         ArrayList<CustomListView.ListData> listViewData = new ArrayList<>();
+
+
+
         for (int i = 0; i < 5; ++i) {
             CustomListView.ListData listData = new CustomListView.ListData();
             listData.mainImage = id[i];

@@ -43,7 +43,7 @@
                 />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -55,6 +55,7 @@
                     android:textColor="#36474f"
                     android:textStyle="bold"
                     android:textSize="12dp"
+
                     />
             </LinearLayout>
 

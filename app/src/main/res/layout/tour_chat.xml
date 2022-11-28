@@ -3,40 +3,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+
+    >
 
 
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
+        <ListView
 
-        android:divider="#FFFFFF"
-        android:dividerHeight="0px"
-        android:padding="8dp">
-    </ListView>
+            android:id="@+id/listview"
+            android:layout_width="wrap_content"
+            android:layout_height="500dp"
+            android:divider="#FFFFFF"
+            android:dividerHeight="0px"
+            android:padding="8dp"
+            />
+
+
     <LinearLayout
-        android:paddingHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
             android:layout_weight="8"
+            android:background="@drawable/edit_text_shape"
             android:gravity="bottom"
-            android:background="@drawable/edit_text_shape"/>
+            android:padding="12dp" />
 
         <Button
-            android:layout_weight="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="보내기"
             android:layout_marginLeft="4dp"
+            android:layout_weight="2"
             android:background="@drawable/btn_blue"
+            android:text="보내기"
             android:textColor="@color/white" />
     </LinearLayout>
 

@@ -56,7 +56,7 @@ public class CustomChatView extends BaseAdapter
         }
 
         ImageView mainImage = convertView.findViewById(R.id.mainImage);
-        TextView title = convertView.findViewById(R.id.title);
+        TextView title = convertView.findViewById(R.id.title1111);
         TextView body_1 = convertView.findViewById(R.id.body_1);
 
 
