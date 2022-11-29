@@ -29,6 +29,7 @@
         <activity android:name=".login_screen.tourist_login_activity"></activity>
         <activity android:name=".main_screen.tour_main_screen_activity"></activity>
         <activity android:name=".main_screen.tour_chat_screen"></activity>
+        <activity android:name=".login_screen.search_region_activity"></activity>
     </application>
 
 </manifest>

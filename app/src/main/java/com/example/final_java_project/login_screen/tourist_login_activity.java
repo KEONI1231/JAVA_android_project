@@ -30,9 +30,8 @@ public class tourist_login_activity extends AppCompatActivity {
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.login_try_btn:
-                Intent intentGuideLogin =
-                        new Intent(getApplicationContext(),
-                                tour_main_screen_activity.class);
+                Intent intentGuideLogin = new Intent(getApplicationContext(),
+                        tour_main_screen_activity.class);
                 startActivity(intentGuideLogin);
                 break;
 
