@@ -61,7 +61,7 @@
                     android:paddingTop="16dp">
 
                     <TextView
-                        android:id="@+id/user_name_text1"
+                        android:id="@+id/guide_name_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -71,7 +71,7 @@
                         android:textColor="#808080"/>
 
                     <TextView
-                        android:id="@+id/user_region_text"
+                        android:id="@+id/guide_region_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -81,7 +81,7 @@
                         android:textColor="#808080"/>
 
                     <TextView
-                        android:id="@+id/user_guide_score"
+                        android:id="@+id/guide_aver_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -90,7 +90,7 @@
                         android:textStyle="bold"
                         android:textColor="#808080"/>
                     <TextView
-                        android:id="@+id/user_total_guide_counting"
+                        android:id="@+id/guide_total_counting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

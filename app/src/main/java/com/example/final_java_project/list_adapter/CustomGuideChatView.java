@@ -15,12 +15,12 @@ import com.example.final_java_project.R;
 
 import java.util.ArrayList;
 
-public class CustomChatView extends BaseAdapter {
+public class CustomGuideChatView extends BaseAdapter {
     LayoutInflater layoutInflater = null;
     private ArrayList<ListData> listViewData = null;
     private int count = 0;
 
-    public CustomChatView(ArrayList<ListData> listData) {
+    public CustomGuideChatView(ArrayList<ListData> listData) {
         listViewData = listData;
         count = listViewData.size();
 
@@ -50,7 +50,7 @@ public class CustomChatView extends BaseAdapter {
             } else {
             }
         }
-        convertView = layoutInflater.inflate(R.layout.chat_custom_listview, parent, false);
+        convertView = layoutInflater.inflate(R.layout.tour_chat_custom_listview, parent, false);
         LinearLayout titleLayout = convertView.findViewById(R.id.item_title_layout);
         ConstraintLayout toplayout = convertView.findViewById(R.id.gravity_set);
         ConstraintSet constraintSet;

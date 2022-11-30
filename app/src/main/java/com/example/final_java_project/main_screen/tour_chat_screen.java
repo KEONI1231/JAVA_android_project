@@ -17,7 +17,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.final_java_project.R;
-import com.example.final_java_project.list_adapter.CustomChatView;
+import com.example.final_java_project.list_adapter.CustomTourChatView;
 
 import java.util.ArrayList;
 
@@ -38,11 +38,11 @@ public class tour_chat_screen extends AppCompatActivity {
         String[] body_1 = {"빠르고 정확하게, 친절하게 도와드립니다!!!", "현지인 이다! 나는!! 항쿡말 자알 몯해!@!!", "완벽주의자. 기적의 60키로 감량",
                 "왈왈!!!왈왈와로알!!!와라라랄!!!왈!", "밤톨아 밥먹자~"};
         LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.chat_custom_listview,null);
-        ArrayList<CustomChatView.ListData> listViewData = new ArrayList<>();
+        View view = inflater.inflate(R.layout.tour_chat_custom_listview,null);
+        ArrayList<CustomTourChatView.ListData> listViewData = new ArrayList<>();
         int i = 0;
         for (int j = 0; j <  30; ++j) {
-            CustomChatView.ListData listData = new CustomChatView.ListData();
+            CustomTourChatView.ListData listData = new CustomTourChatView.ListData();
             if(i>=5) {
                 i = 0;
             }
@@ -56,7 +56,7 @@ public class tour_chat_screen extends AppCompatActivity {
         String value = getIntent.getStringExtra("code");
         System.out.println(value);
 
-        ListAdapter oAdapter = new CustomChatView(listViewData);
+        ListAdapter oAdapter = new CustomTourChatView(listViewData);
         listView.setAdapter(oAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

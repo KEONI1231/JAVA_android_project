@@ -32,6 +32,7 @@
         <activity android:name=".login_screen.search_region_activity"></activity>
         <activity android:name=".main_screen.guide_main_screen_activity"></activity>
         <activity android:name=".setting_screen.tour_main_screen_setting_activity"></activity>
+        <activity android:name=".setting_screen.guide_main_screen_setting_activity"></activity>
     </application>
 
 </manifest>
