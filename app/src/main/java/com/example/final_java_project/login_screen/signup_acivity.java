@@ -72,7 +72,7 @@ public class signup_acivity extends AppCompatActivity {
         else{
             myRegionText.setVisibility(View.GONE);
             searchRegion.setVisibility(View.GONE);
-            TextView textView = findViewById(R.id.my_region_text);
+            TextView textView = (TextView)findViewById(R.id.my_region_text);
             result = "";
             textView.setText("선택한 거주지 : " + result);
         }
