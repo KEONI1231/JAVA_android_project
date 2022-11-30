@@ -1,4 +1,4 @@
-package com.example.final_java_project.main_screen;
+package com.example.final_java_project.list_adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -54,5 +54,11 @@ public class CustomSearchListView extends BaseAdapter {
     }
     public static class ListData {
         public String body_1 = "";
+        public String getBody_1() {
+            return body_1;
+        }
+        public void setbody(String body_1) {
+            this.body_1 = body_1;
+        }
     }
 }

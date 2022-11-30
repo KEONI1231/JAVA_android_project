@@ -1,6 +1,8 @@
 package com.example.final_java_project.login_screen;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -8,6 +10,10 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,25 +44,22 @@ public class signup_acivity extends AppCompatActivity {
     String pw;
     String name;
     String region;
+    String result;
     public void onButtonClick(View view) {
         EditText idEditText = (EditText) findViewById(R.id.signup_id);
         EditText pwEditText = (EditText)findViewById(R.id.signup_pw);
         EditText nameEditText = (EditText)findViewById(R.id.signup_name);
         switch (view.getId()) {
-
             case R.id.try_signup_btn:
                 id = idEditText.getText().toString();
                 pw = pwEditText.getText().toString();
                 name = nameEditText.getText().toString();
+                // result까지 넘겨줄 준비 완료
                 break;
             case R.id.search_region:
-                /*Intent intent = new Intent(signup_acivity.this,MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);*/
-
-                Intent intentGuideLogin = new Intent(getApplicationContext(),
+                Intent intent = new Intent(getBaseContext(),
                         search_region_activity.class);
-                startActivity(intentGuideLogin);
+                launcher.launch(intent);
         }
     }
     public void CheckState(Switch tourGuideCheck) {
@@ -69,7 +72,27 @@ public class signup_acivity extends AppCompatActivity {
         else{
             myRegionText.setVisibility(View.GONE);
             searchRegion.setVisibility(View.GONE);
+            TextView textView = findViewById(R.id.my_region_text);
+            result = "";
+            textView.setText("선택한 거주지 : " + result);
         }
     }
 
+    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>()
+            {
+                @Override
+                public void onActivityResult(ActivityResult data)
+                {
+                    Log.d("TAG", "data : " + data);
+                    if (data.getResultCode() == Activity.RESULT_OK)
+                    {
+                        Intent intent = data.getData();
+                        result = intent.getStringExtra ("result");
+
+                        TextView textView = findViewById(R.id.my_region_text);
+                        textView.setText("선택한 거주지 : " + result);
+                    }
+                }
+            });
 }

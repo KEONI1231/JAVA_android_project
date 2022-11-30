@@ -1,4 +1,4 @@
-package com.example.final_java_project.main_screen;
+package com.example.final_java_project.list_adapter;
 
 import android.widget.TextView;
 
@@ -72,9 +72,6 @@ public class CustomListView extends BaseAdapter
     }
     public static class ListData {
         public int mainImage = 0;
-
-        public int star = 0;
-
         public String title = "";
         public String body_1 = "";
         public String body_2 = "";

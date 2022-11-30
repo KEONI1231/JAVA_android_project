@@ -1,68 +1,60 @@
 package com.example.final_java_project.main_screen;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.final_java_project.R;
-import com.example.final_java_project.list_adapter.CustomChatView;
+import com.example.final_java_project.list_adapter.CustomGuideListView;
 
 import java.util.ArrayList;
 
-public class tour_chat_screen extends AppCompatActivity {
+public class guide_main_screen_activity extends AppCompatActivity {
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tour_chat);
+        setContentView(R.layout.guide_main_screen);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.first_screen_appbar);
-        LinearLayout gravity_set = findViewById(R.id.gravity_set);
         ListView listView;
         listView = findViewById(R.id.listview);
-        String[] title = {"김건휘(가이드)", "나", "김건휘(가이드)", "나", "김건휘(가이드)"};
-        String me = "나";
-        String[] body_1 = {"빠르고 정확하게, 친절하게 도와드립니다!!!", "현지인 이다! 나는!! 항쿡말 자알 몯해!@!!", "완벽주의자. 기적의 60키로 감량",
-                "왈왈!!!왈왈와로알!!!와라라랄!!!왈!", "밤톨아 밥먹자~"};
-        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.chat_custom_listview,null);
-        ArrayList<CustomChatView.ListData> listViewData = new ArrayList<>();
-        int i = 0;
-        for (int j = 0; j <  30; ++j) {
-            CustomChatView.ListData listData = new CustomChatView.ListData();
-            if(i>=5) {
-                i = 0;
-            }
+
+        String[] title = {"응우옌 꾸엉 휘 김(김건휘)", "응우옌 준니엔 조(조발캔)", "응우옌 꾹 형궈(김발칸)",
+                "응우옌 슈 창훼이(밤톨이)", "응우옌 쯔 캐박(밤톨이 견주)"};
+        String[] nameId = {"1","2","3","4","5"};
+        int[] id = {R.drawable.me, R.drawable.jo, R.drawable.kkuk, R.drawable.bam, R.drawable.bam};
+        ArrayList<CustomGuideListView.ListData> listViewData = new ArrayList<>();
+
+        for (int i = 0; i < 5; ++i) {
+            CustomGuideListView.ListData listData = new CustomGuideListView.ListData();
             listData.title = title[i];
-            listData.body_1 = body_1[i];
+            listData.body_2 = "경기도 다낭시 / 평균 응답시간 5 ~ 15";
+            listData.nameId = nameId[i];
             listViewData.add(listData);
-            i = i + 1;
         }
-
-        Intent getIntent = getIntent();
-        String value = getIntent.getStringExtra("code");
-        System.out.println(value);
-
-        ListAdapter oAdapter = new CustomChatView(listViewData);
+        ListAdapter oAdapter = new CustomGuideListView(listViewData);
         listView.setAdapter(oAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String clickName = listViewData.get(position).title;
-
+                String nameId = listViewData.get(position).nameId;
+                Intent intentGuideChat = new Intent(getApplicationContext(),
+                        tour_chat_screen.class);
+                intentGuideChat.putExtra("code",nameId);
+                startActivity(intentGuideChat);
             }
         });
         listView.setOnTouchListener(new View.OnTouchListener() {
@@ -71,7 +63,9 @@ public class tour_chat_screen extends AppCompatActivity {
                 return false;
             }
         });
+
     }
+
 }
 
 
