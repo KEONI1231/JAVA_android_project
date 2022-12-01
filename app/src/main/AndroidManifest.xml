@@ -16,7 +16,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -33,6 +32,7 @@
         <activity android:name=".main_screen.guide_main_screen_activity"></activity>
         <activity android:name=".setting_screen.tour_main_screen_setting_activity"></activity>
         <activity android:name=".setting_screen.guide_main_screen_setting_activity"></activity>
+        <activity android:name=".main_screen.guide_chat_screen"></activity>
     </application>
 
 </manifest>

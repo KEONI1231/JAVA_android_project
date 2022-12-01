@@ -2,6 +2,7 @@ package com.example.final_java_project.list_adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -50,11 +51,17 @@ public class CustomGuideChatView extends BaseAdapter {
             } else {
             }
         }
-        convertView = layoutInflater.inflate(R.layout.tour_chat_custom_listview, parent, false);
+        convertView = layoutInflater.inflate(R.layout.guide_chat_custom_listview, parent, false);
         LinearLayout titleLayout = convertView.findViewById(R.id.item_title_layout);
         ConstraintLayout toplayout = convertView.findViewById(R.id.gravity_set);
         ConstraintSet constraintSet;
+        convertView.setOnTouchListener(new View.OnTouchListener() {
 
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+
+            }});
         //mainImage.setImageResource(listViewData.get(position).mainImage);
 
         if (listViewData.get(position).title.equals("나")) {
@@ -79,7 +86,6 @@ public class CustomGuideChatView extends BaseAdapter {
 
         return convertView;
     }
-
     public static class ListData {
         public int mainImage = 0;
         public String title = "";

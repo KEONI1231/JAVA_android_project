@@ -47,17 +47,21 @@ public class guide_main_screen_activity extends AppCompatActivity {
         ListView listView;
         listView = findViewById(R.id.listview);
 
-        String[] title = {"응우옌 꾸엉 휘 김(김건휘)", "응우옌 준니엔 조(조발캔)", "응우옌 꾹 형궈(김발칸)",
-                "응우옌 슈 창훼이(밤톨이)", "응우옌 쯔 캐박(밤톨이 견주)"};
+        String[] title = {"김건휘", "조준영", "김형국",
+                "서창희", "이상준"};
         String[] nameId = {"1", "2", "3", "4", "5"};
         ArrayList<CustomGuideListView.ListData> listViewData = new ArrayList<>();
-
-        for (int i = 0; i < 5; ++i) {
+        int i = 0;
+        for (int j = 0; j < 30; j++) {
+            if(i >= 5) {
+                i=0;
+            }
             CustomGuideListView.ListData listData = new CustomGuideListView.ListData();
             listData.title = title[i];
-            listData.body_2 = "경기도 다낭시 / 평균 응답시간 5 ~ 15";
+            listData.body_2 = "빠르게 답변해드립니다.";
             listData.nameId = nameId[i];
             listViewData.add(listData);
+            i++;
         }
         ListAdapter oAdapter = new CustomGuideListView(listViewData);
         listView.setAdapter(oAdapter);
@@ -66,7 +70,7 @@ public class guide_main_screen_activity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String nameId = listViewData.get(position).nameId;
                 Intent intentGuideChat = new Intent(getApplicationContext(),
-                        tour_chat_screen.class);
+                        guide_chat_screen.class);
                 intentGuideChat.putExtra("code", nameId);
                 startActivity(intentGuideChat);
             }

@@ -2,6 +2,7 @@ package com.example.final_java_project.list_adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -54,9 +55,13 @@ public class CustomTourChatView extends BaseAdapter {
         LinearLayout titleLayout = convertView.findViewById(R.id.item_title_layout);
         ConstraintLayout toplayout = convertView.findViewById(R.id.gravity_set);
         ConstraintSet constraintSet;
-
         //mainImage.setImageResource(listViewData.get(position).mainImage);
+        convertView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
 
+            }});
         if (listViewData.get(position).title.equals("나")) {
             constraintSet = new ConstraintSet();
             constraintSet.clone(toplayout);
