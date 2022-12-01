@@ -3,8 +3,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     android:orientation="vertical">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/edit_text_shape"
+        android:padding="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="검색 : "
+            android:textColor="#808080"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/search_region_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+    </LinearLayout>
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"

@@ -64,14 +64,22 @@ public class signup_acivity extends AppCompatActivity {
     }
     public void CheckState(Switch tourGuideCheck) {
         TextView myRegionText = findViewById(R.id.my_region_text);
+        TextView myProfileText = findViewById(R.id.my_profile_text);
+        EditText myProfileEditText = findViewById(R.id.my_profile_message_editText);
         Button searchRegion = findViewById(R.id.search_region);
+
+
         if(tourGuideCheck.isChecked()) {
             myRegionText.setVisibility(View.VISIBLE);
             searchRegion.setVisibility(View.VISIBLE);
+            myProfileText.setVisibility(View.VISIBLE);
+            myProfileEditText.setVisibility(View.VISIBLE);
         }
         else{
             myRegionText.setVisibility(View.GONE);
             searchRegion.setVisibility(View.GONE);
+            myProfileText.setVisibility(View.GONE);
+            myProfileEditText.setVisibility(View.GONE);
             TextView textView = (TextView)findViewById(R.id.my_region_text);
             result = "";
             textView.setText("선택한 거주지 : " + result);

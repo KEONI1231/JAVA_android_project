@@ -117,10 +117,10 @@ public class tour_main_screen_activity extends AppCompatActivity {
             case R.id.my_profile_setting:
                 TextView nameTextView = findViewById(R.id.user_name_text);
                 TextView regionTextView = findViewById(R.id.user_region_text);
-                TextView periodTextView = findViewById(R.id.user_period_text);
+
                 myName = nameTextView.getText().toString();
                 myTripRegion = regionTextView.getText().toString();
-                myTripPeriod = periodTextView.getText().toString();
+
 
                 Intent intentMyProfile =
                         new Intent(getApplicationContext(),
@@ -149,10 +149,9 @@ public class tour_main_screen_activity extends AppCompatActivity {
 
                         TextView nameTextView = findViewById(R.id.user_name_text);
                         TextView regionTextView = findViewById(R.id.user_region_text);
-                        TextView periodTextView = findViewById(R.id.user_period_text);
+
                         nameTextView.setText("이름 : " +myName);
                         regionTextView.setText("현재 여행지 : "+myTripRegion);
-                        periodTextView.setText("여행 기간 : "+myTripPeriod);
                         Toast.makeText(getApplicationContext(), "저장되었습니다.",Toast.LENGTH_LONG).show();
                         //textView.setText("선택한 거주지 : " + result);
                     }

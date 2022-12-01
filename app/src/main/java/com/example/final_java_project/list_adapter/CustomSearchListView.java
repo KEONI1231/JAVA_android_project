@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.final_java_project.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CustomSearchListView extends BaseAdapter {
     LayoutInflater layoutInflater = null;
@@ -54,11 +55,7 @@ public class CustomSearchListView extends BaseAdapter {
     }
     public static class ListData {
         public String body_1 = "";
-        public String getBody_1() {
-            return body_1;
-        }
-        public void setbody(String body_1) {
-            this.body_1 = body_1;
-        }
     }
+
+
 }

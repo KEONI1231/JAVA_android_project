@@ -34,16 +34,13 @@ public class tour_main_screen_setting_activity extends AppCompatActivity {
         String period = getIntent.getStringExtra("Period");
 
         TextView nameTextView = findViewById(id.user_name_text);
-        TextView periodTextView = findViewById(id.user_period_text);
         TextView regionTextView = findViewById(id.user_region_text);
 
         nameTextView.setText(name);
-        periodTextView.setText(period);
         regionTextView.setText(region);
     }
     public void onButtonClick(View view) {
         EditText nameEditText = (EditText) findViewById(id.name_editText);
-        EditText periodEditText = (EditText) findViewById(id.trip_period_editText);
         EditText regionEditText = (EditText) findViewById(id.trip_region_editText);
         switch (view.getId()) {
             case R.id.try_change_info:
@@ -51,17 +48,16 @@ public class tour_main_screen_setting_activity extends AppCompatActivity {
                 Intent intent = new Intent();
                 if(nameEditText.getText().toString().length()==0 ) {
                     Toast.makeText(getApplicationContext(), "이름을 입력해주세요.",Toast.LENGTH_LONG).show();
-                }else if(periodEditText.getText().toString().length() == 0 ) {
-                    Toast.makeText(getApplicationContext(), "여행기간을 입력해 주세요",Toast.LENGTH_LONG).show();
+
                 }else if( regionEditText.getText().toString().length() == 0) {
                     Toast.makeText(getApplicationContext(), "여행 지역을 입력해주세요.",Toast.LENGTH_LONG).show();
                 }
                 else {
                     String newName = nameEditText.getText().toString();
-                    String newPeriod = periodEditText.getText().toString();
+
                     String newRegion = regionEditText.getText().toString();
                     intent.putExtra("NewName", newName);
-                    intent.putExtra("NewPeriod", newPeriod);
+
                     intent.putExtra("NewRegion", newRegion);
                     setResult(RESULT_OK, intent);
                     finish();

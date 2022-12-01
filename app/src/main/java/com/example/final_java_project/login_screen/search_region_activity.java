@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -21,6 +24,8 @@ import com.example.final_java_project.list_adapter.CustomSearchListView;
 import java.util.ArrayList;
 
 public class search_region_activity extends AppCompatActivity {
+    ArrayList<CustomSearchListView.ListData> listViewData = new ArrayList<>();
+    int fillterIndex = 0;
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,21 +48,18 @@ public class search_region_activity extends AppCompatActivity {
                         "캐나다", "케냐", "코모로", "코스타리카", "코트디부아르", "쿠바", "쿠웨이트", "콜롬비아", "콩고인민공화국", "콩고민주공화국", "크로아티아", "키르기스스탄", "키리바시", "키프로스", "타지키스탄", "탄자니아",
                         "태국", "토고", "통가", "투르크메니스탄", "투발루", "튀니지", "튀르키예", "트리니다드 토바고", "파나마", "파라과이", "파키스탄", "파푸아뉴기니", "팔라우", "페루", "포르투갈", "폴란드", "프랑스",
                         "피지", "핀란드", "필리핀", "한국", "헝가리",};
+        String[] fillterRegion = {""};
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.search_custom_listview, null);
-        ArrayList<CustomSearchListView.ListData> listViewData = new ArrayList<>();
 
-        int i = 0;
-        for (int j = 0; j < 30; ++j) {
+        EditText editSearch = (EditText) findViewById(R.id.search_region_editText);
+
+        for (int i = 0; i < body_1.length; i++) {
             CustomSearchListView.ListData listData = new CustomSearchListView.ListData();
-            if (i >= 5) {
-                i = 0;
-            }
             listData.body_1 = body_1[i];
-            listData.setbody(body_1[i]);
             listViewData.add(listData);
-            i = i + 1;
         }
+        //listViewData.clear();
         ListAdapter oAdapter = new CustomSearchListView(listViewData);
         listView.setAdapter(oAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,6 +78,35 @@ public class search_region_activity extends AppCompatActivity {
                 return false;
             }
         });
+
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editSearch.getText().toString();
+                for(int i = 0; i <body_1.length; i++) {
+                    if (body_1[i].contains(text)) {
+                        fillterRegion[fillterIndex] = body_1[i];
+                        //System.out.println(text);
+                        fillterIndex = fillterIndex+1;
+                    }
+                }
+                for(int i =0; i< fillterRegion.length; i++){
+                    System.out.println(fillterRegion[i]);
+                }
+            }
+        });
+    }
+    public void fillter(String searchText) {
+
     }
 }
 
