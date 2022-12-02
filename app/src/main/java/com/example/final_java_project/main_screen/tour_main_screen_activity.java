@@ -98,12 +98,12 @@ public class tour_main_screen_activity extends AppCompatActivity {
                 " 별점:4.9 / 가이드 수 + 1024", " 별점:4.9 / 가이드 수 + 14", " 별점:4.7 / 가이드 수 + 14"};
         String[] body_3 = {"빠르고 정확하게, 친절하게 도와드립니다!!!", "현지인 이다! 나는!! 항쿡말 자알 몯해!@!!", "완벽주의자. 기적의 60키로 감량",
                 "왈왈!!!왈왈와로알!!!와라라랄!!!왈!", "밤톨아 밥먹자~"};
-        int[] id = {R.drawable.me, R.drawable.jo, R.drawable.kkuk, R.drawable.bam, R.drawable.bam};
+        int[] id = {R.drawable.character_icon};
         ArrayList<CustomListView.ListData> listViewData = new ArrayList<>();
 
         for (int i = 0; i < 5; ++i) {
             CustomListView.ListData listData = new CustomListView.ListData();
-            listData.mainImage = id[i];
+            listData.mainImage = id[0];
             listData.title = title[i];
             listData.body_1 = body_1[i];
             listData.body_2 = "경기도 다낭시 / 평균 응답시간 5 ~ 15";

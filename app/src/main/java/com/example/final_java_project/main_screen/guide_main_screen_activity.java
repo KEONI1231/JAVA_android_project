@@ -2,12 +2,17 @@ package com.example.final_java_project.main_screen;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -23,11 +28,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.final_java_project.CustomDialog;
 import com.example.final_java_project.R;
 import com.example.final_java_project.list_adapter.CustomGuideListView;
 import com.example.final_java_project.setting_screen.guide_main_screen_setting_activity;
 import com.example.final_java_project.setting_screen.tour_main_screen_setting_activity;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class guide_main_screen_activity extends AppCompatActivity {
@@ -43,6 +50,12 @@ public class guide_main_screen_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.first_screen_appbar);
+
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        layoutParams.dimAmount = 0.8f;
+        getWindow().setAttributes(layoutParams);
+
         ListView listView;
         listView = findViewById(R.id.listview);
 
@@ -99,7 +112,14 @@ public class guide_main_screen_activity extends AppCompatActivity {
                 intentGuideProfile.putExtra("GuideProfileMsg",guideProfileMessage);
                 launcher.launch(intentGuideProfile);
                 break;
+
+            case R.id.queston_button:
+                CustomDialog customDialog;
+                customDialog = new CustomDialog(guide_main_screen_activity.this,3);
+                customDialog.show();
+
         }
+
     }
 
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -123,6 +143,9 @@ public class guide_main_screen_activity extends AppCompatActivity {
                     }
                 }
             });
+
+
+
 }
 
 

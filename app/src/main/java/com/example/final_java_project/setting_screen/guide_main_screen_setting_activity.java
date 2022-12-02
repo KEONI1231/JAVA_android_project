@@ -2,14 +2,12 @@ package com.example.final_java_project.setting_screen;
 
 import static com.example.final_java_project.R.id;
 import static com.example.final_java_project.R.layout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +22,7 @@ public class guide_main_screen_setting_activity extends AppCompatActivity {
         getSupportActionBar().setTitle("설정");
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(layout.login_appbar);
+        getSupportActionBar().setCustomView(layout.main_setting_appbar);
 
         Intent getIntent = getIntent();
         String name = getIntent.getStringExtra("GuideName");

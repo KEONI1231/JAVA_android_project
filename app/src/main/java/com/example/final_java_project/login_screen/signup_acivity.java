@@ -57,16 +57,17 @@ public class signup_acivity extends AppCompatActivity {
                 name = nameEditText.getText().toString();
                 // result까지 넘겨줄 준비 완료
                 break;
-            case R.id.search_region:
-                Intent intent = new Intent(getBaseContext(),
-                        search_region_activity.class);
-                launcher.launch(intent);
             case R.id.queston_button:
-
                 CustomDialog customDialog;
                 customDialog = new CustomDialog(signup_acivity.this,2);
                 customDialog.show();
                 break;
+            case R.id.search_region:
+                Intent intent = new Intent(getBaseContext(),
+                        search_region_activity.class);
+                launcher.launch(intent);
+                break;
+
 
         }
     }
@@ -75,7 +76,6 @@ public class signup_acivity extends AppCompatActivity {
         TextView myProfileText = findViewById(R.id.my_profile_text);
         EditText myProfileEditText = findViewById(R.id.my_profile_message_editText);
         Button searchRegion = findViewById(R.id.search_region);
-
 
         if(tourGuideCheck.isChecked()) {
             myRegionText.setVisibility(View.VISIBLE);

@@ -137,8 +137,7 @@ public class search_region_activity extends AppCompatActivity {
                     }
                     ListAdapter oAdapter = new CustomSearchListView(listViewData);
                     listView.setAdapter(oAdapter);
-                    System.out.println(body_1.length);
-                    System.out.println(fillterRegion.length);
+
                 }
                 if (text.length() == 0) {
                     fillterIndex = 0;

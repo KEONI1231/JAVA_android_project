@@ -26,7 +26,7 @@ public class tour_main_screen_setting_activity extends AppCompatActivity {
         getSupportActionBar().setTitle("설정");
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(layout.login_appbar);
+        getSupportActionBar().setCustomView(layout.main_setting_appbar);
 
         Intent getIntent = getIntent();
         String name = getIntent.getStringExtra("Name");
