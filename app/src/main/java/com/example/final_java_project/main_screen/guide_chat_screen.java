@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -69,6 +70,20 @@ public class guide_chat_screen extends AppCompatActivity {
                 return false;
             }
         });
+    }
+    public void onButtonClick(View view){
+        String text;
+        switch (view.getId()) {
+
+            case R.id.send_message:
+                EditText editText = findViewById(R.id.chat_editText);
+                text = editText.getText().toString();
+                if(text.equals("//chat-server-clear")) {
+                    System.out.println(text);
+                }
+                break;
+
+        }
     }
 }
 

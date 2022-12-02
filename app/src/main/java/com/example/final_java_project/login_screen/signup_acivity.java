@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -34,6 +35,12 @@ public class signup_acivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.signup_appbar);
         Switch tourGuideCheck = findViewById(R.id.tour_guide_check);
         CheckState(tourGuideCheck);
+
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        layoutParams.dimAmount = 0.8f;
+        getWindow().setAttributes(layoutParams);
+
         tourGuideCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

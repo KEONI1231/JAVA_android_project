@@ -17,14 +17,17 @@
             android:orientation="vertical"
             android:gravity="center">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/mainImage"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-
+                android:onClick="onButtonClick"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/airplane2" />
+                android:src="@drawable/airplane2"
+                android:contentDescription="TODO"
+                android:background="@android:color/transparent"
+                />
 
             <Button
                 android:id="@+id/login_guide_btn"

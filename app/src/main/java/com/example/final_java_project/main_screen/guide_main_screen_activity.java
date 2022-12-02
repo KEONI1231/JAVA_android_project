@@ -117,6 +117,7 @@ public class guide_main_screen_activity extends AppCompatActivity {
                 CustomDialog customDialog;
                 customDialog = new CustomDialog(guide_main_screen_activity.this,3);
                 customDialog.show();
+                break;
 
         }
 
