@@ -148,8 +148,7 @@
                         android:contentDescription="TODO"
                         android:scaleType="fitCenter"
                         android:src="@drawable/quesion"
-                        android:onClick="onButtonClick"
-                        />
+                        android:onClick="onButtonClick" />
                     <Switch
                         android:layout_weight="1"
                         android:id="@+id/tour_guide_check"

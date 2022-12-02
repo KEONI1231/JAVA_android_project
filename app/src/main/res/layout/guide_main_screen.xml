@@ -46,12 +46,13 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginTop="34dp"
-                    android:layout_weight="1"
+
                     android:background="@android:color/transparent"
                     android:contentDescription="TODO"
                     android:onClick="onButtonClick"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/settings" />
+                    android:src="@drawable/settings"
+                    android:gravity="right"/>
             </LinearLayout>
 
             <LinearLayout
@@ -76,8 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="32dp"
-                    >
+                    android:paddingHorizontal="32dp">
 
                     <TextView
                         android:id="@+id/guide_name_text"
@@ -133,19 +133,40 @@
                         android:textSize="16dp"
                         android:textStyle="bold" />
                 </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="8dp"
+                    android:text="진행중인 채팅 목록"
+                    android:textColor="#808080"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8" />
+                <ImageButton
+                    android:id="@+id/queston_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="34dp"
+
+                    android:background="@android:color/transparent"
+                    android:contentDescription="TODO"
+                    android:onClick="onButtonClick"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/quesion"
+                    android:gravity="right"/>
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/guide_list_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingVertical="16dp"
-                android:paddingLeft="8dp"
-                android:text="진행중인 채팅 목록"
-                android:textColor="#808080"
-                android:textSize="24dp"
-                android:textStyle="bold" />
 
             <ListView
                 android:id="@+id/listview"
