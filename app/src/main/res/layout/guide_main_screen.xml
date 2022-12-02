@@ -6,35 +6,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/my_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
                     android:layout_weight="1"
                     android:paddingLeft="8dp"
                     android:text="내 정보"
+                    android:textColor="#808080"
                     android:textSize="24dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="24dp"
-                    android:textColor="#808080"/>
+                    android:textStyle="bold" />
+
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="8" />
+
                 <ImageButton
                     android:id="@+id/guide_profile_button"
                     android:layout_width="24dp"
@@ -43,22 +49,35 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:contentDescription="TODO"
-                    android:scaleType="fitCenter"
                     android:onClick="onButtonClick"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/settings" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/edit_text_shape"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/mainImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/profile_image_round_border"
+                    android:clipToOutline="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/me" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingTop="16dp">
+                    android:paddingHorizontal="32dp"
+                    >
 
                     <TextView
                         android:id="@+id/guide_name_text"
@@ -66,38 +85,53 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="이름 : 김건휘"
+                        android:textColor="#808080"
                         android:textSize="16dp"
-                        android:textStyle="bold"
-                        android:textColor="#808080"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/guide_region_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="현재 거주지 : "
+                        android:paddingTop="8dp"
+                        android:text="현재 거주지 : 독일"
+                        android:textColor="#808080"
                         android:textSize="16dp"
-                        android:textStyle="bold"
-                        android:textColor="#808080"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/guide_aver_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:paddingTop="8dp"
                         android:text="내 평점 : "
+                        android:textColor="#808080"
                         android:textSize="16dp"
-                        android:textStyle="bold"
-                        android:textColor="#808080"/>
+                        android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/guide_total_counting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:paddingTop="8dp"
                         android:text="총 가이드 횟수 : "
+                        android:textColor="#808080"
                         android:textSize="16dp"
-                        android:textStyle="bold"
-                        android:textColor="#808080"/>
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/my_profile_message_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="8dp"
+                        android:text="상태메세지 : 빠르고 친절하게 답변해드립니다."
+                        android:textColor="#808080"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -109,9 +143,9 @@
                 android:paddingVertical="16dp"
                 android:paddingLeft="8dp"
                 android:text="진행중인 채팅 목록"
+                android:textColor="#808080"
                 android:textSize="24dp"
-                android:textStyle="bold"
-                android:textColor="#808080"/>
+                android:textStyle="bold" />
 
             <ListView
                 android:id="@+id/listview"
@@ -120,12 +154,12 @@
                 android:background="@drawable/edit_text_shape"
                 android:divider="#FFFFFF"
                 android:dividerHeight="0px"
-                android:padding="8dp">
-            </ListView>
+                android:padding="8dp"></ListView>
+
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"/>
+                android:layout_marginTop="100dp" />
         </LinearLayout>
     </ScrollView>
 

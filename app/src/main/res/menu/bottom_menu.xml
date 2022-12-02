@@ -17,10 +17,10 @@
         android:icon="@drawable/chat"/>
 
     <item
-        android:id="@+id/setting_tab"
-        android:title="Setting"
+        android:id="@+id/queston_tab"
+        android:title="Info"
         app:showAsAction="always"
-        android:icon="@drawable/settings"
+        android:icon="@drawable/quesion"
         android:enabled="true"/>
 
 

@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.final_java_project.CustomDialog;
 import com.example.final_java_project.MainActivity;
 import com.example.final_java_project.R;
 import com.example.final_java_project.main_screen.tour_main_screen_activity;
@@ -60,6 +61,13 @@ public class signup_acivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(),
                         search_region_activity.class);
                 launcher.launch(intent);
+            case R.id.queston_button:
+
+                CustomDialog customDialog;
+                customDialog = new CustomDialog(signup_acivity.this,2);
+                customDialog.show();
+                break;
+
         }
     }
     public void CheckState(Switch tourGuideCheck) {

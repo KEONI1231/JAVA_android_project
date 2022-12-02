@@ -29,27 +29,24 @@ public class guide_main_screen_setting_activity extends AppCompatActivity {
         Intent getIntent = getIntent();
         String name = getIntent.getStringExtra("GuideName");
         String region = getIntent.getStringExtra("GuideRegion");
-        String averScore = getIntent.getStringExtra("AverScore");
-        String totalCount = getIntent.getStringExtra("TotalCounting");
+        String profileMsg = getIntent.getStringExtra("GuideProfileMsg");
 
         TextView nameTextView = findViewById(R.id.guide_name_text);
         TextView regionTextView = findViewById(R.id.guide_region_text);
-        TextView averScoreTextView = findViewById(R.id.guide_aver_score);
-        TextView totalCountingTextView = findViewById(R.id.guide_total_counting);
+        TextView profileMsgTextView = findViewById(id.profile_message);
 
         System.out.println(name);
         System.out.println(region);
-        System.out.println(averScore);
-        System.out.println(totalCount);
+        System.out.println(profileMsg);
         nameTextView.setText(name);
         regionTextView.setText(region);
-        averScoreTextView.setText(averScore);
-        totalCountingTextView.setText(totalCount);
+
 
     }
     public void onButtonClick(View view) {
         EditText nameEditText =(EditText) findViewById(R.id.guide_name_editText);
         EditText regionEditText = (EditText) findViewById(R.id.guide_region_editText);
+        EditText profileMsgEditText = (EditText)findViewById(R.id.profile_message_editText);
         switch (view.getId()) {
             case id.try_change_info:
 
@@ -58,12 +55,16 @@ public class guide_main_screen_setting_activity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "이름을 입력해주세요.",Toast.LENGTH_LONG).show();
                 }else if( regionEditText.getText().toString().length() == 0) {
                     Toast.makeText(getApplicationContext(), "여행 지역을 입력해주세요.",Toast.LENGTH_LONG).show();
+                }else if( profileMsgEditText.getText().toString().length() == 0) {
+                    Toast.makeText(getApplicationContext(), "상태메세지를 입력해주세요.", Toast.LENGTH_LONG).show();
                 }
                 else {
                     String newName = nameEditText.getText().toString();
                     String newRegion = regionEditText.getText().toString();
+                    String newProfileMsg = profileMsgEditText.getText().toString();
                     intent.putExtra("NewGuideName", newName);
                     intent.putExtra("NewGuideRegion", newRegion);
+                    intent.putExtra("NewGuideProfileMsg", newProfileMsg);
                     setResult(RESULT_OK, intent);
                     finish();
                 }

@@ -33,8 +33,7 @@ import java.util.ArrayList;
 public class guide_main_screen_activity extends AppCompatActivity {
     String guideName;
     String guideRegion;
-    String guideAverScore;
-    String guideTotalCounting;
+    String guideProfileMessage;
 
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
@@ -88,19 +87,16 @@ public class guide_main_screen_activity extends AppCompatActivity {
             case R.id.guide_profile_button:
                 TextView nameTextView = findViewById(R.id.guide_name_text);
                 TextView regionTextView = findViewById(R.id.guide_region_text);
-                TextView averScoreTextView = findViewById(R.id.guide_aver_score);
-                TextView totalCountingTextView = findViewById(R.id.guide_total_counting);
+                TextView myProfileMsgText = findViewById(R.id.my_profile_message_text);
                 guideName = nameTextView.getText().toString();
                 guideRegion = regionTextView.getText().toString();
-                guideAverScore = averScoreTextView.getText().toString();
-                guideTotalCounting = totalCountingTextView.getText().toString();
+                guideProfileMessage = myProfileMsgText.getText().toString();
                 Intent intentGuideProfile =
                         new Intent(getApplicationContext(),
                                 guide_main_screen_setting_activity.class);
                 intentGuideProfile.putExtra("GuideName", guideName);
                 intentGuideProfile.putExtra("GuideRegion", guideRegion);
-                intentGuideProfile.putExtra("AverScore", guideAverScore);
-                intentGuideProfile.putExtra("TotalCounting", guideTotalCounting);
+                intentGuideProfile.putExtra("GuideProfileMsg",guideProfileMessage);
                 launcher.launch(intentGuideProfile);
                 break;
         }
@@ -115,10 +111,13 @@ public class guide_main_screen_activity extends AppCompatActivity {
                         Intent intent = data.getData();
                         guideName = intent.getStringExtra("NewGuideName");
                         guideRegion = intent.getStringExtra("NewGuideRegion");
+                        guideProfileMessage = intent.getStringExtra("NewGuideProfileMsg");
                         TextView nameTextView = findViewById(R.id.guide_name_text);
                         TextView regionTextView = findViewById(R.id.guide_region_text);
+                        TextView myProfileMsgText = findViewById(R.id.my_profile_message_text);
                         nameTextView.setText("이름 : " + guideName);
                         regionTextView.setText("현재 거주지 : " + guideRegion);
+                        myProfileMsgText.setText("상태메세지 : " + guideProfileMessage);
                         Toast.makeText(getApplicationContext(), "저장되었습니다.", Toast.LENGTH_LONG).show();
                         //textView.setText("선택한 거주지 : " + result);
                     }

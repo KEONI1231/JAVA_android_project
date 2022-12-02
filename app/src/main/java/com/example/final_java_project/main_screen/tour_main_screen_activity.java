@@ -2,13 +2,18 @@ package com.example.final_java_project.main_screen;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,6 +28,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.final_java_project.CustomDialog;
+import com.example.final_java_project.MainActivity;
 import com.example.final_java_project.R;
 import com.example.final_java_project.list_adapter.CustomListView;
 import com.example.final_java_project.login_screen.guide_login_activity;
@@ -49,6 +56,11 @@ public class tour_main_screen_activity extends AppCompatActivity {
         ListView listView;
         listView = findViewById(R.id.listview);
 
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        layoutParams.dimAmount = 0.8f;
+        getWindow().setAttributes(layoutParams);
+
         bottomNavigationView = findViewById(R.id.navigationView1);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -68,7 +80,11 @@ public class tour_main_screen_activity extends AppCompatActivity {
                                         tour_chat_screen.class);
                         startActivity(intentTourChat);
                         break;
-                    case R.id.setting_tab:
+                    case R.id.queston_tab:
+
+                        CustomDialog customDialog;
+                        customDialog = new CustomDialog(tour_main_screen_activity.this,1);
+                        customDialog.show();
                         break;
 
                 }
