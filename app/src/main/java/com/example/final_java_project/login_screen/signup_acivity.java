@@ -1,15 +1,21 @@
 package com.example.final_java_project.login_screen;
+import static com.example.final_java_project.R.*;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -25,15 +31,15 @@ import com.example.final_java_project.R;
 import com.example.final_java_project.main_screen.tour_main_screen_activity;
 
 public class signup_acivity extends AppCompatActivity {
-
+    Switch tourGuideCheck;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sign_up);
+        setContentView(layout.sign_up);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.signup_appbar);
-        Switch tourGuideCheck = findViewById(R.id.tour_guide_check);
+        getSupportActionBar().setCustomView(layout.signup_appbar);
+        tourGuideCheck = findViewById(R.id.tour_guide_check);
         CheckState(tourGuideCheck);
 
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
@@ -48,20 +54,33 @@ public class signup_acivity extends AppCompatActivity {
             }
         });
     }
-    String id;
-    String pw;
-    String name;
-    String region;
+    String idText;
+    String pwText;
+    String nameText;
     String result;
     public void onButtonClick(View view) {
         EditText idEditText = (EditText) findViewById(R.id.signup_id);
         EditText pwEditText = (EditText)findViewById(R.id.signup_pw);
         EditText nameEditText = (EditText)findViewById(R.id.signup_name);
+
         switch (view.getId()) {
             case R.id.try_signup_btn:
-                id = idEditText.getText().toString();
-                pw = pwEditText.getText().toString();
-                name = nameEditText.getText().toString();
+                idText = idEditText.getText().toString();
+                pwText = pwEditText.getText().toString();
+                nameText = nameEditText.getText().toString();
+
+                if(idText.length() == 0 || pwText.length() == 0 || nameText.length()  == 0) {
+                    Toast.makeText(getApplicationContext(), "ID, PW, 이름을 모두 입력해주세요.", Toast.LENGTH_LONG).show();
+                }
+                else if(tourGuideCheck.isChecked() == true && result.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "가이드로 회원가입 하려면 거주지를 입력해주세요.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    finish();
+                    Toast.makeText(getApplicationContext(), "회원가입 완료", Toast.LENGTH_LONG).show();
+
+                    //restapi 통신
+                }
                 // result까지 넘겨줄 준비 완료
                 break;
             case R.id.queston_button:
