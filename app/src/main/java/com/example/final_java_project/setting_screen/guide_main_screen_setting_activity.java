@@ -98,6 +98,7 @@ public class guide_main_screen_setting_activity extends AppCompatActivity {
 
                         TextView textView = findViewById(R.id.my_region_text);
                         textView.setText(result);
+                        textView.setVisibility(View.VISIBLE);
                     }
                 }
             });

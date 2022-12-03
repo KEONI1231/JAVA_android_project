@@ -12,13 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.final_java_project.R;
+import com.example.final_java_project.login_screen.search_region_activity;
 
 public class tour_main_screen_setting_activity extends AppCompatActivity {
+    String result;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +46,7 @@ public class tour_main_screen_setting_activity extends AppCompatActivity {
     }
     public void onButtonClick(View view) {
         EditText nameEditText = (EditText) findViewById(id.name_editText);
-        EditText regionEditText = (EditText) findViewById(id.trip_region_editText);
+
         switch (view.getId()) {
             case R.id.try_change_info:
 
@@ -49,13 +54,13 @@ public class tour_main_screen_setting_activity extends AppCompatActivity {
                 if(nameEditText.getText().toString().length()==0 ) {
                     Toast.makeText(getApplicationContext(), "이름을 입력해주세요.",Toast.LENGTH_LONG).show();
 
-                }else if( regionEditText.getText().toString().length() == 0) {
+                }else if( result.length() == 0) {
                     Toast.makeText(getApplicationContext(), "여행 지역을 입력해주세요.",Toast.LENGTH_LONG).show();
                 }
                 else {
                     String newName = nameEditText.getText().toString();
 
-                    String newRegion = regionEditText.getText().toString();
+                    String newRegion = result;
                     intent.putExtra("NewName", newName);
 
                     intent.putExtra("NewRegion", newRegion);
@@ -63,7 +68,31 @@ public class tour_main_screen_setting_activity extends AppCompatActivity {
                     finish();
                 }
                 break;
+            case id.search_region:
+                Intent intent1 = new Intent(getBaseContext(),
+                        search_region_activity.class);
+                launcher.launch(intent1);
+                break;
         }
     }
+    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>()
+            {
+                @Override
+                public void onActivityResult(ActivityResult data)
+                {
+                    Log.d("TAG", "data : " + data);
+                    if (data.getResultCode() == Activity.RESULT_OK)
+                    {
+                        Intent intent = data.getData();
+                        result = intent.getStringExtra ("result");
+
+                        TextView textView = findViewById(R.id.my_region_text);
+                        textView.setText(result);
+                        textView.setVisibility(View.VISIBLE);
+
+                    }
+                }
+            });
 
 }

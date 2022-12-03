@@ -168,13 +168,16 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:padding="16dp"
+                        android:background="@drawable/edit_text_shape"
                         android:id="@+id/my_region_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
                         android:textColor="#808080"
                         android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
                 <LinearLayout

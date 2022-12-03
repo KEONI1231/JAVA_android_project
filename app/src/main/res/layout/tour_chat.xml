@@ -24,6 +24,7 @@
         android:paddingHorizontal="16dp">
 
         <EditText
+            android:textSize="12dp"
             android:id="@+id/chat_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +32,7 @@
             android:background="@drawable/edit_text_shape"
             android:gravity="bottom"
             android:padding="12dp"
-            android:hint="채팅 종료 명령어 : \n//chat-server-clear"/>
+            android:hint="채팅 종료 명령어 ://chat-server-clear"/>
 
         <Button
             android:id="@+id/send_message"

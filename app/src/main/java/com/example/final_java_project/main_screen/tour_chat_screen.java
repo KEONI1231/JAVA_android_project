@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.final_java_project.CustomDialog;
+import com.example.final_java_project.CustomDialogStart;
 import com.example.final_java_project.MainActivity;
 import com.example.final_java_project.R;
 import com.example.final_java_project.list_adapter.CustomTourChatView;
@@ -40,17 +42,22 @@ public class tour_chat_screen extends AppCompatActivity {
         ListView listView;
         listView = findViewById(R.id.listview);
 
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        layoutParams.dimAmount = 0.8f;
+        getWindow().setAttributes(layoutParams);
+
         String[] title = {"김건휘(가이드)", "나", "김건휘(가이드)", "나", "김건휘(가이드)"};
         String me = "나";
         String[] body_1 = {"빠르고 정확하게, 친절하게 도와드립니다!!!", "현지인 이다! 나는!! 항쿡말 자알 몯해!@!!", "완벽주의자. 기적의 60키로 감량",
                 "왈왈!!!왈왈와로알!!!와라라랄!!!왈!", "밤톨아 밥먹자~"};
-        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.tour_chat_custom_listview,null);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.tour_chat_custom_listview, null);
         ArrayList<CustomTourChatView.ListData> listViewData = new ArrayList<>();
         int i = 0;
-        for (int j = 0; j <  30; ++j) {
+        for (int j = 0; j < 30; ++j) {
             CustomTourChatView.ListData listData = new CustomTourChatView.ListData();
-            if(i>=5) {
+            if (i >= 5) {
                 i = 0;
             }
             listData.title = title[i];
@@ -63,8 +70,10 @@ public class tour_chat_screen extends AppCompatActivity {
         String value = getIntent.getStringExtra("code");
         System.out.println(value);
 
+
         ListAdapter oAdapter = new CustomTourChatView(listViewData);
         listView.setAdapter(oAdapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -75,26 +84,34 @@ public class tour_chat_screen extends AppCompatActivity {
         listView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 listView.requestDisallowInterceptTouchEvent(true);
+
                 return false;
             }
         });
 
 
-        }
-    public void onButtonClick(View view){
+    }
+
+    public void onButtonClick(View view) {
         String text;
+
         switch (view.getId()) {
 
             case R.id.send_message:
                 EditText editText = findViewById(R.id.chat_editText);
                 text = editText.getText().toString();
-                if(text.equals("//chat-server-clear")) {
+                if (text.equals("//chat-server-clear")) {
+                    CustomDialogStart customDialog;
+                    customDialog = new CustomDialogStart(tour_chat_screen.this, 0);
+                    String star = "";
+                    customDialog.show();
                     System.out.println(text);
                 }
                 break;
 
         }
     }
+
 }
 
 

@@ -78,9 +78,7 @@ public class guide_chat_screen extends AppCompatActivity {
             case R.id.send_message:
                 EditText editText = findViewById(R.id.chat_editText);
                 text = editText.getText().toString();
-                if(text.equals("//chat-server-clear")) {
-                    System.out.println(text);
-                }
+
                 break;
 
         }
