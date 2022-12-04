@@ -21,18 +21,20 @@
 
             <ImageView
                 android:id="@+id/mainImage"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="260dp"
+                android:layout_height="200dp"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/airplane2" />
+                android:src="@drawable/main_img1"
+                android:layout_marginTop="24dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/edit_text_shape"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -15,19 +15,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
-
+            android:gravity="center"
+            android:paddingBottom="24dp"
+            >
             <ImageButton
                 android:id="@+id/mainImage"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:onClick="onButtonClick"
-                android:clipToOutline="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/airplane2"
-                android:contentDescription="TODO"
+                android:layout_width="260dp"
+                android:layout_height="200dp"
                 android:background="@android:color/transparent"
-                />
+                android:clipToOutline="true"
+                android:contentDescription="TODO"
+                android:onClick="onButtonClick"
+                android:scaleType="centerCrop"
+                android:src="@drawable/main_img1"
+                android:layout_marginBottom="64dp"/>
 
             <Button
                 android:id="@+id/login_guide_btn"

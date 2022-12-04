@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_blue"
                 android:onClick="onButtonClick"
-                android:text="거주지 검색"
+                android:text= "여행지 검색"
                 android:textStyle="bold" />
         </LinearLayout>
 
