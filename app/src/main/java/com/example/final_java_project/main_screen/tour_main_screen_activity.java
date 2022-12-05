@@ -56,13 +56,15 @@ public class tour_main_screen_activity extends AppCompatActivity {
         ListView listView;
         listView = findViewById(R.id.listview);
 
+
+        String tourId = getIntent().getStringExtra("TourId");
+        System.out.println(tourId);
+
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount = 0.8f;
         getWindow().setAttributes(layoutParams);
-
         bottomNavigationView = findViewById(R.id.navigationView1);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -78,6 +80,7 @@ public class tour_main_screen_activity extends AppCompatActivity {
                         Intent intentTourChat =
                                 new Intent(getApplicationContext(),
                                         tour_chat_screen.class);
+                        intentTourChat.putExtra("TourId",tourId);
                         startActivity(intentTourChat);
                         break;
                     case R.id.queston_tab:
@@ -91,7 +94,6 @@ public class tour_main_screen_activity extends AppCompatActivity {
                 return true;
             }
         });
-
         String[] title = {"응우옌 꾸엉 휘 김(김건휘)", "응우옌 준니엔 조(조발캔)", "응우옌 꾹 형궈(김발칸)",
                 "응우옌 슈 창훼이(밤톨이)", "응우옌 쯔 캐박(밤톨이 견주)"};
         String[] body_1 = {" 별점 : 4.7 / 가이드 수 + 14", " 별점:0.01 / 가이드 수 + 102",

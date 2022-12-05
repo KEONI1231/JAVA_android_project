@@ -1,9 +1,14 @@
 package com.example.final_java_project.main_screen;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,18 +23,48 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.final_java_project.CustomDialog;
 import com.example.final_java_project.CustomDialogStart;
-import com.example.final_java_project.MainActivity;
 import com.example.final_java_project.R;
 import com.example.final_java_project.list_adapter.CustomTourChatView;
-import com.example.final_java_project.login_screen.guide_login_activity;
-import com.example.final_java_project.login_screen.signup_acivity;
-import com.example.final_java_project.login_screen.tourist_login_activity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 
 public class tour_chat_screen extends AppCompatActivity {
+    Handler mHandler;
+    Socket socket;
+    PrintWriter sendWriter;
+    String ip = "211.62.179.135";
+    int port = 8080;
+    String tourId;
+    String read=  "ㅁㅇㄴㄹㄴㅇㄹ";
+    String sendMsg = "asdfsdaf";
+    JSONObject json;
+    //System.out.println(json.getClass().getName());
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            sendWriter.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,9 +73,32 @@ public class tour_chat_screen extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.first_screen_appbar);
-        LinearLayout gravity_set = findViewById(R.id.gravity_set);
         ListView listView;
         listView = findViewById(R.id.listview);
+        mHandler = new Handler();
+        tourId = getIntent().getStringExtra("TourId");
+
+        new Thread() {
+            public void run() {
+                try {
+                    InetAddress serverAddr = InetAddress.getByName(ip);
+                    socket = new Socket(serverAddr, port);
+                    sendWriter = new PrintWriter(socket.getOutputStream());
+                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    while(true){
+                        read = input.readLine();
+
+                       // System.out.println("TTTTTTTT"+read);
+                        if(read!=null){
+                              mHandler.post(new msgUpdate(json));
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }}.start();
+
+
 
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
@@ -48,7 +106,7 @@ public class tour_chat_screen extends AppCompatActivity {
         getWindow().setAttributes(layoutParams);
 
         String[] title = {"김건휘(가이드)", "나", "김건휘(가이드)", "나", "김건휘(가이드)"};
-        String me = "나";
+        ;
         String[] body_1 = {"빠르고 정확하게, 친절하게 도와드립니다!!!", "현지인 이다! 나는!! 항쿡말 자알 몯해!@!!", "완벽주의자. 기적의 60키로 감량",
                 "왈왈!!!왈왈와로알!!!와라라랄!!!왈!", "밤톨아 밥먹자~"};
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -66,10 +124,6 @@ public class tour_chat_screen extends AppCompatActivity {
             i = i + 1;
         }
 
-        Intent getIntent = getIntent();
-        String value = getIntent.getStringExtra("code");
-        System.out.println(value);
-
 
         ListAdapter oAdapter = new CustomTourChatView(listViewData);
         listView.setAdapter(oAdapter);
@@ -84,19 +138,15 @@ public class tour_chat_screen extends AppCompatActivity {
         listView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 listView.requestDisallowInterceptTouchEvent(true);
-
                 return false;
             }
         });
 
-
     }
 
-    public void onButtonClick(View view) {
+    public void onButtonClick(View view) throws JSONException {
         String text;
-
         switch (view.getId()) {
-
             case R.id.send_message:
                 EditText editText = findViewById(R.id.chat_editText);
                 text = editText.getText().toString();
@@ -105,13 +155,36 @@ public class tour_chat_screen extends AppCompatActivity {
                     customDialog = new CustomDialogStart(tour_chat_screen.this, 0);
                     String star = "";
                     customDialog.show();
-                    System.out.println(text);
+              //      System.out.println(text);
+                } else {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                read = "{\"type\":\"ENTER\", \"roomId\":\"944fd79f-5163-4c2c-9238-81c2e60af26d\",\"sender\":\"kimkim\",\"message\":\"asd\"}";
+                                json = new JSONObject(read);
+                                sendWriter.println(json);
+                                sendWriter.flush();
+                                System.out.println("asd");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
                 }
                 break;
-
         }
     }
+    class msgUpdate implements Runnable{
+        private String msg;
+        public msgUpdate(JSONObject str) {this.msg=str.toString();}
 
+        @Override
+        public void run() {
+            System.out.println("sadfsadfdsafasdfasdfasdfasdfsadffsdfs");
+        }
+    }
 }
 
 

@@ -23,11 +23,9 @@ public class tourist_login_activity extends AppCompatActivity {
         //앱바 텍스트
         getSupportActionBar().setTitle("여행객 로그인");
         // id, pw 텍스트 색조정
-      
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.login_appbar);
-
     }
     public void onButtonClick(View view) {
         EditText idEditText = findViewById(R.id.id_editText);
@@ -41,6 +39,7 @@ public class tourist_login_activity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "로그인 성공",Toast.LENGTH_LONG).show();
                     Intent intentTourLogin = new Intent(getApplicationContext(),
                             tour_main_screen_activity.class);
+                    intentTourLogin.putExtra("TourId",idEditText.getText().toString());
                     startActivity(intentTourLogin);
                 }
                 break;
