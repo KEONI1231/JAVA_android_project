@@ -90,5 +90,6 @@ public class CustomTourChatView extends BaseAdapter {
         public String title = "";
         public String body_1 = "";
 
+
     }
 }

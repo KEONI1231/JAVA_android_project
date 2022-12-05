@@ -97,7 +97,6 @@ public class search_region_activity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
                 String text = editSearch.getText().toString();
@@ -115,7 +114,6 @@ public class search_region_activity extends AppCompatActivity {
                         }
                         fillterSuccCount += 1;
                     }
-
                 }
                 if (fillterSuccCount == 0) {
                     fillterIndex = 0;
