@@ -52,19 +52,7 @@ public class tour_chat_screen extends AppCompatActivity {
     String read=  "ㅁㅇㄴㄹㄴㅇㄹ";
     String sendMsg = "asdfsdaf";
     JSONObject json;
-    //System.out.println(json.getClass().getName());
 
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        try {
-            sendWriter.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,8 +85,6 @@ public class tour_chat_screen extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }}.start();
-
-
 
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
