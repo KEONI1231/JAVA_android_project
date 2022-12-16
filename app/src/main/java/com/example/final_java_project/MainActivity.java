@@ -51,12 +51,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentSignUp = new Intent(getApplicationContext(), signup_acivity.class);
                 startActivity(intentSignUp);
                 break;
-
         }
 
     }
     public void sendWebSocket() {
-
         try {
             OkHttpClient client = new OkHttpClient();
 

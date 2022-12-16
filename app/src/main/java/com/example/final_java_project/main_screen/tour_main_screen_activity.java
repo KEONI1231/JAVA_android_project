@@ -94,12 +94,11 @@ public class tour_main_screen_activity extends AppCompatActivity {
                 return true;
             }
         });
-        String[] title = {"응우옌 꾸엉 휘 김(김건휘)", "응우옌 준니엔 조(조발캔)", "응우옌 꾹 형궈(김발칸)",
-                "응우옌 슈 창훼이(밤톨이)", "응우옌 쯔 캐박(밤톨이 견주)"};
+        String[] title = {"김건휘 가이드","서창희 가이드","조준영 가이드","김형국 가이드","김재원 가이드",};
         String[] body_1 = {" 별점 : 4.7 / 가이드 수 + 14", " 별점:0.01 / 가이드 수 + 102",
                 " 별점:4.9 / 가이드 수 + 1024", " 별점:4.9 / 가이드 수 + 14", " 별점:4.7 / 가이드 수 + 14"};
-        String[] body_3 = {"빠르고 정확하게, 친절하게 도와드립니다!!!", "현지인 이다! 나는!! 항쿡말 자알 몯해!@!!", "완벽주의자. 기적의 60키로 감량",
-                "왈왈!!!왈왈와로알!!!와라라랄!!!왈!", "밤톨아 밥먹자~"};
+        String[] body_3 = {"빠르고 정확하게, 친절하게 도와드립니다!!!", "다낭에서 5년 정도 살았습니다. 친절합니다!", "한번가는 여행 확실하게 알려드립니다!",
+                "평균 3분안에 답장해드립니다.", "현지에서 9년 정도 살았습니다!!"};
         int[] id = {R.drawable.character_icon};
         ArrayList<CustomListView.ListData> listViewData = new ArrayList<>();
 
@@ -116,10 +115,15 @@ public class tour_main_screen_activity extends AppCompatActivity {
         ListAdapter oAdapter = new CustomListView(listViewData);
         listView.setAdapter(oAdapter);
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String clickName = listViewData.get(position).title;
+                Intent intentGuideLogin =
+                        new Intent(getApplicationContext(),
+                                tour_chat_screen.class);
+                startActivity(intentGuideLogin);
 
             }
         });

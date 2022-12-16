@@ -1,8 +1,6 @@
-package com.example.final_java_project.backend;
+package com.example.final_java_project.backend.for_guide;
 
-import org.w3c.dom.Text;
-
-public class Model__CheckAlready {
+public class GuideSignUpRequest {
 
 //    {
 //        "id": "01012345678",
@@ -23,7 +21,7 @@ public class Model__CheckAlready {
     private String ment;
     private int totalCount;
 
-    public Model__CheckAlready(String phone) {
+    public GuideSignUpRequest(String phone) {
         this.id = phone;
     }
 

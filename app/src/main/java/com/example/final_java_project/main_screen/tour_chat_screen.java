@@ -91,17 +91,18 @@ public class tour_chat_screen extends AppCompatActivity {
         layoutParams.dimAmount = 0.8f;
         getWindow().setAttributes(layoutParams);
 
-        String[] title = {"김건휘(가이드)", "나", "김건휘(가이드)", "나", "김건휘(가이드)"};
-        ;
-        String[] body_1 = {"빠르고 정확하게, 친절하게 도와드립니다!!!", "현지인 이다! 나는!! 항쿡말 자알 몯해!@!!", "완벽주의자. 기적의 60키로 감량",
-                "왈왈!!!왈왈와로알!!!와라라랄!!!왈!", "밤톨아 밥먹자~"};
+        String[] title = {"김건휘(가이드)", "나", "김건휘(가이드)", "나", "김건휘(가이드)","김건휘(가이드)","나","김건휘(가이드)", "김건휘(가이드)"};
+
+        String[] body_1 = {"안녕하세요 건휘님ㅎㅎ", "네 안녕하세요 가이드님", "어떤걸 도와드릴까요?",
+                "미케해변 주변에 자리를 잡았는데\n이 주변에 현지인들 많이 가는술집이 있나요?", "아네 그 주변에 좋은 술집 많아요!!", "일단 그 주변에 칵테일 바가 있는데\n" +
+                "여행객들도 많이 없고 거의 현지인들만 가요", "분위기가 많이 시끌시끌 한가요?","아니요 분위기는 많이 안시끄러워요ㅎㅎ", "치안도 좋아서 안심하셔도 됩니다"};
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.tour_chat_custom_listview, null);
         ArrayList<CustomTourChatView.ListData> listViewData = new ArrayList<>();
         int i = 0;
         for (int j = 0; j < 30; ++j) {
             CustomTourChatView.ListData listData = new CustomTourChatView.ListData();
-            if (i >= 5) {
+            if (i >= 9) {
                 i = 0;
             }
             listData.title = title[i];

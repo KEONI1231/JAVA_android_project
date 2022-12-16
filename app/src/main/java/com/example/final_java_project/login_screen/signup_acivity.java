@@ -172,7 +172,6 @@ public class signup_acivity extends AppCompatActivity {
                         });
                     }
                 }
-                // result까지 넘겨줄 준비 완료
                 break;
             case R.id.queston_button:
                 CustomDialog customDialog;
@@ -188,7 +187,6 @@ public class signup_acivity extends AppCompatActivity {
 
         }
     }
-
     public void CheckState(Switch tourGuideCheck) {
         TextView myRegionText = findViewById(R.id.my_region_text);
         TextView myProfileText = findViewById(R.id.my_profile_text);
