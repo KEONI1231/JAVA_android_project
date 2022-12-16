@@ -36,6 +36,12 @@ public class tourist_login_activity extends AppCompatActivity {
     public void onButtonClick(View view) {
         EditText idEditText = findViewById(R.id.id_editText);
         EditText pwEditText = findViewById(R.id.pw_editText);
+        String id = idEditText.getText().toString();
+        String pw = pwEditText.getText().toString();
+        final String[] firestoreId = {""};
+        final String[] firestorePw = {""};
+        final String[] myRegion = {""};
+        final boolean[] chatState = {false};
         switch (view.getId()) {
             case R.id.login_try_btn:
                 if(idEditText.getText().toString().length() == 0 || pwEditText.getText().toString().length() == 0) {
@@ -43,35 +49,37 @@ public class tourist_login_activity extends AppCompatActivity {
                 }
                 else {
                     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-                    DocumentReference docRef = firestore.collection("cities").document("SF");
+                    DocumentReference docRef = firestore.collection("tour_user").document(idEditText.getText().toString());
                     docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    //로그인 성공
-                                    //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                    firestoreId[0] = document.get("id").toString();
+                                    firestorePw[0] = document.get("pw").toString();
+                                    chatState[0] = (boolean) document.get("chat_state");
+                                    myRegion[0] = document.get("trip_region").toString();
+                                    if(firestoreId[0].equals(id) && firestorePw[0].equals(pw)) {
+                                        Toast.makeText(getApplicationContext(), "로그인 성공",Toast.LENGTH_LONG).show();
+                                        Intent intentTourLogin = new Intent(getApplicationContext(),
+                                                tour_main_screen_activity.class);
+                                        intentTourLogin.putExtra("TourId",idEditText.getText().toString());
+                                        intentTourLogin.putExtra("TripRegion",myRegion[0]);
+                                        intentTourLogin.putExtra("TourChatState",chatState[0]);
+                                        startActivity(intentTourLogin);
+                                    }
+                                    else {
+                                        Toast.makeText(getApplicationContext(), "id또는 pw가 일치하지 않습니다..",Toast.LENGTH_LONG).show();
+                                    }
                                 } else {
-                                    //로그인 실패
-                                    //Log.d(TAG, "No such document");
+                                    Toast.makeText(getApplicationContext(), "id또는 pw가 일치하지 않습니다..",Toast.LENGTH_LONG).show();
                                 }
                             } else {
-                                //네트워크등의 에러 발생.
-                                //Log.d(TAG, "get failed with ", task.getException());
+                                Toast.makeText(getApplicationContext(), "에러 발생. 네트워크 체크 요망",Toast.LENGTH_LONG).show();
                             }
                         }
                     });
-
-                    /*
-                    ...로그인 시도...
-                     */
-
-                    Toast.makeText(getApplicationContext(), "로그인 성공",Toast.LENGTH_LONG).show();
-                    Intent intentTourLogin = new Intent(getApplicationContext(),
-                            tour_main_screen_activity.class);
-                    intentTourLogin.putExtra("TourId",idEditText.getText().toString());
-                    startActivity(intentTourLogin);
                 }
                 break;
 

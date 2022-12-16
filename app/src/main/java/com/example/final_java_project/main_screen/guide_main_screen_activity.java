@@ -41,6 +41,7 @@ public class guide_main_screen_activity extends AppCompatActivity {
     String guideName;
     String guideRegion;
     String guideProfileMessage;
+    String guideId;
 
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
@@ -48,7 +49,6 @@ public class guide_main_screen_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guide_main_screen);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.first_screen_appbar);
 
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
@@ -58,6 +58,8 @@ public class guide_main_screen_activity extends AppCompatActivity {
 
         ListView listView;
         listView = findViewById(R.id.listview);
+
+        guideId = getIntent().getStringExtra("GuideId");
 
         String[] title = {"김건휘", "조준영", "김형국",
                 "서창희", "이상준"};
@@ -107,6 +109,7 @@ public class guide_main_screen_activity extends AppCompatActivity {
                 Intent intentGuideProfile =
                         new Intent(getApplicationContext(),
                                 guide_main_screen_setting_activity.class);
+                intentGuideProfile.putExtra("GuideId",guideId);
                 intentGuideProfile.putExtra("GuideName", guideName);
                 intentGuideProfile.putExtra("GuideRegion", guideRegion);
                 intentGuideProfile.putExtra("GuideProfileMsg",guideProfileMessage);

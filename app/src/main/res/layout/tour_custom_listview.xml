@@ -12,7 +12,7 @@
         android:background="@drawable/edit_text_shape"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:adjustViewBounds="true"
+
         >
 
         <ImageView
@@ -35,7 +35,7 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
+                android:paddingVertical="3dp"
                 android:text="60계치"
                 android:textColor="#36474f"
                 android:textStyle="bold"
@@ -51,7 +51,7 @@
                     android:id="@+id/body_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" / 리뷰1+ / 사장님댓글1+ / 100m"
+                    android:text="별점 : 0 / 가이드 수 : 0"
                     android:textColor="#36474f"
                     android:textStyle="bold"
                     android:textSize="12dp"
@@ -68,7 +68,7 @@
                     android:id="@+id/body_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="3dp"
+                    android:paddingVertical="3dp"
                     android:text="배달료 0원 / 배달시간 45~60"
                     android:textColor="#36474f"
                     android:textStyle="bold"
@@ -83,7 +83,7 @@
                     android:id="@+id/body_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="3dp"
+                    android:paddingVertical="3dp"
                     android:text="빠르고 친절한 답변"
                     android:textColor="#808080"
                     android:textStyle="bold"

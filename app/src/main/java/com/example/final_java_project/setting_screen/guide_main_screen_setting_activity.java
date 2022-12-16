@@ -16,16 +16,22 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.final_java_project.R;
 import com.example.final_java_project.login_screen.search_region_activity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class guide_main_screen_setting_activity extends AppCompatActivity {
     String result = "";
+    String guideId = "";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +45,13 @@ public class guide_main_screen_setting_activity extends AppCompatActivity {
         String name = getIntent.getStringExtra("GuideName");
         String region = getIntent.getStringExtra("GuideRegion");
         String profileMsg = getIntent.getStringExtra("GuideProfileMsg");
+        guideId = getIntent.getStringExtra("GuideId");
 
         TextView nameTextView = findViewById(R.id.guide_name_text);
         TextView regionTextView = findViewById(R.id.guide_region_text);
         TextView profileMsgTextView = findViewById(id.profile_message);
 
+        System.out.println(guideId);
         System.out.println(name);
         System.out.println(region);
         System.out.println(profileMsg);
@@ -67,8 +75,26 @@ public class guide_main_screen_setting_activity extends AppCompatActivity {
                 }
                 else {
                     String newName = nameEditText.getText().toString();
-                    String newRegion = result;
                     String newProfileMsg = profileMsgEditText.getText().toString();
+                    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+                    DocumentReference washingtonRef = firestore.collection("guide_user").document(guideId);
+
+// Set the "isCapital" field of the city 'DC'
+                    washingtonRef
+                            .update("name", newName, "guide_profile_message", newProfileMsg,"guide_region",result)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //Log.d(TAG, "DocumentSnapshot successfully updated!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    //Log.w(TAG, "Error updating document", e);
+                                }
+                            });
+                    String newRegion = result;
                     intent.putExtra("NewGuideName", newName);
                     intent.putExtra("NewGuideRegion", newRegion);
                     intent.putExtra("NewGuideProfileMsg", newProfileMsg);
@@ -95,7 +121,6 @@ public class guide_main_screen_setting_activity extends AppCompatActivity {
                     {
                         Intent intent = data.getData();
                         result = intent.getStringExtra ("result");
-
                         TextView textView = findViewById(R.id.my_region_text);
                         textView.setText(result);
                         textView.setVisibility(View.VISIBLE);
