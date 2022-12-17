@@ -61,7 +61,7 @@ public class CustomGuideListView extends BaseAdapter
         return convertView;
     }
     public static class ListData {
-        public String nameId = "";
+        public String Id = "";
         public String title = "";
         public String body_2 = "";
     }

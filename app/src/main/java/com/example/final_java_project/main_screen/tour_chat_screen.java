@@ -2,6 +2,7 @@ package com.example.final_java_project.main_screen;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -27,8 +28,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -39,18 +43,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class tour_chat_screen extends AppCompatActivity {
     Handler mHandler;
     String tourId;
     String guideId;
     int fireCnt = 0;
+    double starAverage = 0.0;
+    double starTotalStar = 0;
+    double guideTotalCount = 0;
 
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tour_chat);
+
+
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.first_screen_appbar);
@@ -73,6 +84,31 @@ public class tour_chat_screen extends AppCompatActivity {
                 "여행객들도 많이 없고 거의 현지인들만 가요", "분위기가 많이 시끌시끌 한가요?","아니요 분위기는 많이 안시끄러워요ㅎㅎ", "치안도 좋아서 안심하셔도 됩니다"};
 
          */
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference docRef = db.collection("cities").document();
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    //Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    finish();//인텐트 종료
+                    overridePendingTransition(0, 0);//인텐트 효과 없애기
+                    Intent intent = getIntent(); //인텐트
+                    startActivity(intent); //액티비티 열기
+                    overridePendingTransition(0, 0);//인텐트 효과 없애기
+                    //Log.d(TAG, "Current data: " + snapshot.getData());
+                } else {
+
+                    // Log.d(TAG, "Current data: null");
+                }
+            }
+        });
+
         List<String> title = new ArrayList<>();
         List<String> body_1 = new ArrayList<>();
 
@@ -131,19 +167,44 @@ public class tour_chat_screen extends AppCompatActivity {
                 if (text.equals("//평가하기")) {
                     CustomDialogStart customDialog;
                     customDialog = new CustomDialogStart(tour_chat_screen.this, 0);
-                    String star = "";
+                    customDialog.show();
 
+                    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+                    DocumentReference docRef = firestore.collection("guide_user").document(guideId);
+                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                   starAverage =  Double.parseDouble(String.valueOf(document.get("guide_aver_star")));
+                                   starTotalStar =  Double.parseDouble(String.valueOf(document.get("guide_total_star")));
+                                   guideTotalCount = Double.parseDouble(String.valueOf(document.get("guide_total_count")));
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Error",Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Toast.makeText(getApplicationContext(), "에러 발생. 네트워크 체크 요망",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
                     customDialog.setDialogListener(new CustomDialogStart.CustomDialogStartListener() {
                         @Override
                         public void onPositiveClicked(int addr) {
+                            starTotalStar += addr;
+                            starAverage = Double.parseDouble(String.valueOf(starTotalStar / (guideTotalCount + 1)));
+                            System.out.println(starAverage);
                             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
                             DocumentReference washingtonRef = firestore.collection("guide_user").document(guideId);
                             washingtonRef
-                                    .update("guide_total_count", FieldValue.increment(1))
+                                    .update("guide_total_count", FieldValue.increment(1),
+                                            "guide_aver_star",Math.round(starAverage*100)/100.0,
+                                            "guide_total_star",starTotalStar)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             //Log.d(TAG, "DocumentSnapshot successfully updated!");
+                                            Toast.makeText(getApplicationContext(), "평가 등록 완료",Toast.LENGTH_LONG).show();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -156,24 +217,9 @@ public class tour_chat_screen extends AppCompatActivity {
 
 
                     });
-                    customDialog.show();
 
-                    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-                    DocumentReference washingtonRef = firestore.collection("guide_user").document(guideId);
-                    washingtonRef
-                            .update("guide_total_count", FieldValue.increment(1))
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    //Log.d(TAG, "DocumentSnapshot successfully updated!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    //Log.w(TAG, "Error updating document", e);
-                                }
-                            });
+
+
                 }
                 else {
                     EditText editText1 = findViewById(R.id.chat_editText);
@@ -191,13 +237,13 @@ public class tour_chat_screen extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     //finish();
-                                    Toast.makeText(getApplicationContext(), "회원가입 완료", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_LONG).show();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getApplicationContext(), "아이디가 중복되었거나 다른 문제가 발생하였습니다.", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getApplicationContext(), "아이디가 중복되었거나 다른 문제가 발생하였습니다.", Toast.LENGTH_LONG).show();
                                 }
                             });
                 }
@@ -233,6 +279,7 @@ public class tour_chat_screen extends AppCompatActivity {
                                 }
                             }
                         });
+
                 break;
         }
     }

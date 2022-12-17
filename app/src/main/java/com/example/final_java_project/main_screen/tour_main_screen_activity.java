@@ -81,7 +81,6 @@ public class tour_main_screen_activity extends AppCompatActivity {
 
         tourId = getIntent().getStringExtra("TourId");
         defaultTripRegion = getIntent().getStringExtra("TripRegion");
-        System.out.println(tourId);
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         DocumentReference docRef = firestore.collection("tour_user").document(tourId);
@@ -96,7 +95,7 @@ public class tour_main_screen_activity extends AppCompatActivity {
                         nameView.setText("이름 : " + document.get("name").toString());
                         tripRegionView.setText("현재 여행지 : " + document.get("trip_region").toString());
                     } else {
-                        Toast.makeText(getApplicationContext(), "id또는 pw가 일치하지 않습니다..", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "id또는 pw가 일치하지 않습니다..", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "에러 발생. 네트워크 체크 요망", Toast.LENGTH_LONG).show();
@@ -166,9 +165,18 @@ public class tour_main_screen_activity extends AppCompatActivity {
                                 //  System.out.println(document.get("guide_region").toString());
                                 //System.out.println(document.getData());
 
-                                title.add("이름 : " + document.get("name") + "             ");
+                                title.add("이름 : " + document.get("name") + "              " +
+                                        "                                                  " +
+                                        "                                                  " +
+                                        "                                                  " +
+                                        "                                                  " +
+                                        "                                                  " +
+                                        "                                                  " +
+                                        "                                                  " +
+                                        "                                                  " +
+                                        "" );
                                 body_1.add((String) ("별점 : " + document.get("guide_aver_star") + " / "
-                                        + "가이드 수 : " + document.get("guide_total_star")));
+                                        + "가이드 수 : " + document.get("guide_total_count")));
                                 body_2.add((String) document.get("guide_region"));
                                 body_3.add((String) document.get("guide_profile_message"));
                                 guideIdChat.add((String) document.get("id"));
@@ -290,7 +298,7 @@ public class tour_main_screen_activity extends AppCompatActivity {
 
                                                     title.add(document.get("name").toString());
                                                     body_1.add("별점 : " + document.get("guide_aver_star").toString() + " / "
-                                                            + "가이드 수 : " + document.get("guide_total_star").toString());
+                                                            + "가이드 수 : " + document.get("guide_total_count").toString());
                                                     body_2.add(document.get("guide_region").toString());
                                                     body_3.add(document.get("guide_profile_message").toString());
                                                     guideIdChat1.add((String) document.get("id"));
@@ -325,7 +333,6 @@ public class tour_main_screen_activity extends AppCompatActivity {
                                                     startActivity(intentGuideLogin);
                                                 }
                                             });
-                                            System.out.println(fireCntRe[0]);
 
 
                                         }

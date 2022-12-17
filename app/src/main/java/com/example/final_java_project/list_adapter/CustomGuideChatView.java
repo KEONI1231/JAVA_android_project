@@ -64,7 +64,7 @@ public class CustomGuideChatView extends BaseAdapter {
             }});
         //mainImage.setImageResource(listViewData.get(position).mainImage);
 
-        if (listViewData.get(position).title.equals("나")) {
+        if (listViewData.get(position).title.equals(listViewData.get(position).id)) {
             constraintSet = new ConstraintSet();
             constraintSet.clone(toplayout);
             constraintSet.connect(toplayout.getId(), ConstraintSet.RIGHT, titleLayout.getId(), ConstraintSet.RIGHT, 0);
@@ -90,6 +90,6 @@ public class CustomGuideChatView extends BaseAdapter {
         public int mainImage = 0;
         public String title = "";
         public String body_1 = "";
-
+        public String id = "";
     }
 }

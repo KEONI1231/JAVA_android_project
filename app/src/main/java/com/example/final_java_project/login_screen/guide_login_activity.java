@@ -35,6 +35,7 @@ public class guide_login_activity extends AppCompatActivity {
         EditText pwEditText = findViewById(R.id.pw_editText);
         String[] firestoreId = {""};
         String[] firestorePw = {""};
+        String[] myRegion = {""};
         String id = idEditText.getText().toString();
         String pw = pwEditText.getText().toString();
         switch (view.getId()) {
@@ -53,12 +54,13 @@ public class guide_login_activity extends AppCompatActivity {
                                 if (document.exists()) {
                                     firestoreId[0] = document.get("id").toString();
                                     firestorePw[0] = document.get("pw").toString();
-
+                                    myRegion[0] = document.get("guide_region").toString();
                                     if(firestoreId[0].equals(id) && firestorePw[0].equals(pw)) {
                                         Toast.makeText(getApplicationContext(), "로그인 성공",Toast.LENGTH_LONG).show();
                                         Intent intentGuideLogin = new Intent(getApplicationContext(),
                                                 guide_main_screen_activity.class);
                                         intentGuideLogin.putExtra("GuideId",id);
+                                        intentGuideLogin.putExtra("GuideRegion",myRegion[0]);
                                         startActivity(intentGuideLogin);
                                     }
                                     else {

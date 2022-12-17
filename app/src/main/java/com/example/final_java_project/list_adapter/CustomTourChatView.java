@@ -49,6 +49,7 @@ public class CustomTourChatView extends BaseAdapter {
             if (layoutInflater == null) {
                 layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             } else {
+
             }
         }
         convertView = layoutInflater.inflate(R.layout.tour_chat_custom_listview, parent, false);
@@ -63,7 +64,6 @@ public class CustomTourChatView extends BaseAdapter {
 
             }});
         if (listViewData.get(position).title.equals(listViewData.get(position).id)) {
-            listViewData.get(position).title = "< 나 >";
             constraintSet = new ConstraintSet();
             constraintSet.clone(toplayout);
             constraintSet.connect(toplayout.getId(), ConstraintSet.RIGHT, titleLayout.getId(), ConstraintSet.RIGHT, 0);
@@ -74,8 +74,6 @@ public class CustomTourChatView extends BaseAdapter {
             constraintSet.connect(titleLayout.getId(), ConstraintSet.LEFT, titleLayout.getId(), ConstraintSet.LEFT, 0);
             constraintSet.applyTo(toplayout);
         }
-
-        //ImageView mainImage = convertView.findViewById(R.id.mainImage);
         TextView title = convertView.findViewById(R.id.title1111);
         TextView body_1 = convertView.findViewById(R.id.body_1);
 

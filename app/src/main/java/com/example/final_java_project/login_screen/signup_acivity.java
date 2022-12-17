@@ -77,6 +77,7 @@ public class signup_acivity extends AppCompatActivity {
     int guideCount = 0;
     int guideAverStar = 0;
     int guideTotalStar = 0;
+
     public void onButtonClick(View view) {
         EditText idEditText = (EditText) findViewById(R.id.signup_id);
         EditText pwEditText = (EditText) findViewById(R.id.signup_pw);
@@ -104,28 +105,23 @@ public class signup_acivity extends AppCompatActivity {
                                     if (document.exists()) {
                                         Toast.makeText(getApplicationContext(), "아이디가 중복되었습니다.", Toast.LENGTH_LONG).show();
                                     } else {
-                                    //    System.out.println("asdf");
                                         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
                                         Map<String, Object> city = new HashMap<>();
                                         city.put("id", idText);
                                         city.put("pw", pwText);
                                         city.put("name", nameText);
                                         city.put("trip_region", "");
-
                                         firestore.collection("tour_user").document(idText)
                                                 .set(city)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         finish();
-                                                        //Toast.makeText(getApplicationContext(), "회원가입 완료", Toast.LENGTH_LONG).show();
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-                                                       //
-                                                        // wToast.makeText(getApplicationContext(), "아이디가 중복되었거나 다른 문제가 발생하였습니다.", Toast.LENGTH_LONG).show();
                                                     }
                                                 });
                                         firestore.collection("user").document(idText)
@@ -178,13 +174,11 @@ public class signup_acivity extends AppCompatActivity {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         finish();
-                                                        //Toast.makeText(getApplicationContext(), "회원가입 완료", Toast.LENGTH_LONG).show();
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-                                                        //Toast.makeText(getApplicationContext(), "아이디가 중복되었거나 다른 문제가 발생하였습니다.", Toast.LENGTH_LONG).show();
                                                     }
                                                 });
                                         firestore.collection("user").document(idText)
@@ -225,6 +219,7 @@ public class signup_acivity extends AppCompatActivity {
 
         }
     }
+
     public void CheckState(Switch tourGuideCheck) {
         TextView myRegionText = findViewById(R.id.my_region_text);
         TextView myProfileText = findViewById(R.id.my_profile_text);
