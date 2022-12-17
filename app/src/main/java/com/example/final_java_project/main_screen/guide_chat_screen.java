@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -56,7 +57,7 @@ public class guide_chat_screen extends AppCompatActivity {
         guideId = getIntent().getStringExtra("GuideId");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final DocumentReference docRef = db.collection("cities").document();
+        final DocumentReference docRef = db.collection(tourId+"!@#"+guideId).document("state");
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -65,13 +66,41 @@ public class guide_chat_screen extends AppCompatActivity {
                     return;
                 }
                 if (snapshot != null && snapshot.exists()) {
-                    finish();//인텐트 종료
-                    overridePendingTransition(0, 0);//인텐트 효과 없애기
-                    Intent intent = getIntent(); //인텐트
-                    startActivity(intent); //액티비티 열기
-                    overridePendingTransition(0, 0);//인텐트 효과 없애기
+                    ListView listView;
+                    listView = findViewById(R.id.listview);
+                    List<String> title = new ArrayList<>();
+                    List<String> body_1 = new ArrayList<>();
+                    FirebaseFirestore firestore1 = FirebaseFirestore.getInstance();
+                    ArrayList<CustomGuideChatView.ListData> listViewData = new ArrayList<>();
+                    listViewData.clear();
+                    int[] getFireCntRe = {0};
+                    firestore1.collection(tourId+"!@#"+guideId).orderBy("time", Query.Direction.ASCENDING)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            title.add(document.get("id").toString());
+                                            body_1.add(document.get("text").toString());
+                                            CustomGuideChatView.ListData listData = new CustomGuideChatView.ListData();
+                                            listData.title = title.get(getFireCntRe[0]);
+                                            listData.body_1 = body_1.get(getFireCntRe[0]);
+                                            listData.id = guideId;
+                                            getFireCntRe[0]++;
+                                            listViewData.add(listData);
+                                            ListAdapter oAdapter = new CustomGuideChatView(listViewData);
+                                            listView.setAdapter(oAdapter);
+                                            // Log.d(TAG, document.getId() + " => " + document.getData());
+                                        }
+                                    } else {
+                                        System.out.println("any Data");
+                                    }
+                                }
+                            });
                     //Log.d(TAG, "Current data: " + snapshot.getData());
                 } else {
+
                 }
             }
         });
@@ -115,6 +144,7 @@ public class guide_chat_screen extends AppCompatActivity {
                 return false;
             }
         });
+
     }
     public void onButtonClick(View view){
         String text;
@@ -126,6 +156,8 @@ public class guide_chat_screen extends AppCompatActivity {
                 LocalDate now1 = LocalDate.now();
                 LocalTime now2 = LocalTime.now();
                 Map<String, Object> city = new HashMap<>();
+                Map<String, Object> city1= new HashMap<>();
+                city1.put("state",now2);
                 city.put("id", guideId  );
                 city.put("text", text);
                 city.put("time",now1.toString()+now2.toString() );
@@ -141,6 +173,21 @@ public class guide_chat_screen extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(getApplicationContext(), "Error 발생.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                firestore.collection(tourId+"!@#"+guideId).document("state")
+                        .set(city1)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                //finish();
+                                //Text(getApplicationContext(), "전송완료", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                //Toast.makeText(getApplicationContext(), "아이디가 중복되었거나 다른 문제가 발생하였습니다.", Toast.LENGTH_LONG).show();
                             }
                         });
 
@@ -164,7 +211,8 @@ public class guide_chat_screen extends AppCompatActivity {
                                         CustomGuideChatView.ListData listData = new CustomGuideChatView.ListData();
                                         listData.title = title.get(getFireCntRe[0]);
                                         listData.body_1 = body_1.get(getFireCntRe[0]);
-                                        listData.id = tourId;
+                                        listData.id = guideId;
+                                      //  Toast.makeText(getApplicationContext(), guideId, Toast.LENGTH_LONG).show();
                                         getFireCntRe[0]++;
                                         listViewData.add(listData);
                                         ListAdapter oAdapter = new CustomGuideChatView(listViewData);
@@ -176,11 +224,6 @@ public class guide_chat_screen extends AppCompatActivity {
                                 }
                             }
                         });
-                finish();//인텐트 종료
-                overridePendingTransition(0, 0);//인텐트 효과 없애기
-                Intent intent = getIntent(); //인텐트
-                startActivity(intent); //액티비티 열기
-                overridePendingTransition(0, 0);//인텐트 효과 없애기
                 break;
 
         }

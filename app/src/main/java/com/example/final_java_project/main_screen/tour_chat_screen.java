@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -68,7 +69,7 @@ public class tour_chat_screen extends AppCompatActivity {
         layoutParams.dimAmount = 0.8f;
         getWindow().setAttributes(layoutParams);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final DocumentReference docRef = db.collection("cities").document();
+        final DocumentReference docRef = db.collection(tourId+"!@#"+guideId).document("state");
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -79,11 +80,38 @@ public class tour_chat_screen extends AppCompatActivity {
                 }
 
                 if (snapshot != null && snapshot.exists()) {
-                    finish();//인텐트 종료
-                    overridePendingTransition(0, 0);//인텐트 효과 없애기
-                    Intent intent = getIntent(); //인텐트
-                    startActivity(intent); //액티비티 열기
-                    overridePendingTransition(0, 0);//인텐트 효과 없애기
+                    ListView listView;
+                    listView = findViewById(R.id.listview);
+                    List<String> title = new ArrayList<>();
+                    List<String> body_1 = new ArrayList<>();
+                    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+                    ArrayList<CustomTourChatView.ListData> listViewData = new ArrayList<>();
+                    listViewData.clear();
+                    int[] getFireCntRe = {0};
+                    firestore.collection(tourId+"!@#"+guideId).orderBy("time", Query.Direction.ASCENDING)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            title.add(document.get("id").toString());
+                                            body_1.add(document.get("text").toString());
+                                            CustomTourChatView.ListData listData = new CustomTourChatView.ListData();
+                                            listData.title = title.get(getFireCntRe[0]);
+                                            listData.body_1 = body_1.get(getFireCntRe[0]);
+                                            listData.id = tourId;
+                                            getFireCntRe[0]++;
+                                            listViewData.add(listData);
+                                            ListAdapter oAdapter = new CustomTourChatView(listViewData);
+                                            listView.setAdapter(oAdapter);
+                                            // Log.d(TAG, document.getId() + " => " + document.getData());
+                                        }
+                                    } else {
+                                        System.out.println("any Data");
+                                    }
+                                }
+                            });
                 } else {
 
                 }
@@ -137,6 +165,8 @@ public class tour_chat_screen extends AppCompatActivity {
                 return false;
             }
         });
+
+
     }
 
     public void onButtonClick(View view) throws JSONException {
@@ -194,12 +224,7 @@ public class tour_chat_screen extends AppCompatActivity {
                                         }
                                     });
                         }
-
-
                     });
-
-
-
                 }
                 else {
                     EditText editText1 = findViewById(R.id.chat_editText);
@@ -208,6 +233,8 @@ public class tour_chat_screen extends AppCompatActivity {
                     LocalDate now1 = LocalDate.now();
                     LocalTime now2 = LocalTime.now();
                     Map<String, Object> city = new HashMap<>();
+                    Map<String, Object> city1 = new HashMap<>();
+                    city1.put("state",now2);
                     city.put("id", tourId);
                     city.put("text", text);
                     city.put("time",now1.toString()+now2.toString() );
@@ -226,6 +253,23 @@ public class tour_chat_screen extends AppCompatActivity {
                                     //Toast.makeText(getApplicationContext(), "아이디가 중복되었거나 다른 문제가 발생하였습니다.", Toast.LENGTH_LONG).show();
                                 }
                             });
+
+                    firestore.collection(tourId+"!@#"+guideId).document("state")
+                            .set(city1)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //finish();
+                                    //Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_LONG).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                   // Toast.makeText(getApplicationContext(), "아이디가 중복되었거나 다른 문제가 발생하였습니다.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
                 }
                 ListView listView;
                 listView = findViewById(R.id.listview);
@@ -259,7 +303,6 @@ public class tour_chat_screen extends AppCompatActivity {
                                 }
                             }
                         });
-
                 break;
         }
     }
