@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -91,6 +92,8 @@ public class guide_chat_screen extends AppCompatActivity {
                                             listViewData.add(listData);
                                             ListAdapter oAdapter = new CustomGuideChatView(listViewData);
                                             listView.setAdapter(oAdapter);
+                                            listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+                                            listView.setSelection(oAdapter.getCount() - 1);
                                             // Log.d(TAG, document.getId() + " => " + document.getData());
                                         }
                                     } else {
@@ -126,6 +129,8 @@ public class guide_chat_screen extends AppCompatActivity {
                                 listViewData.add(listData);
                                 ListAdapter oAdapter = new CustomGuideChatView(listViewData);
                                 listView.setAdapter(oAdapter);
+                                listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+                                listView.setSelection(oAdapter.getCount() - 1);
                             }
                         } else {
                             System.out.println("any Data");
@@ -152,6 +157,9 @@ public class guide_chat_screen extends AppCompatActivity {
             case R.id.send_message:
                 EditText editText1 = findViewById(R.id.chat_editText);
                 text = editText1.getText().toString();
+                editText1.setText(null);
+                InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 FirebaseFirestore firestore = FirebaseFirestore.getInstance();
                 LocalDate now1 = LocalDate.now();
                 LocalTime now2 = LocalTime.now();
@@ -217,6 +225,8 @@ public class guide_chat_screen extends AppCompatActivity {
                                         listViewData.add(listData);
                                         ListAdapter oAdapter = new CustomGuideChatView(listViewData);
                                         listView.setAdapter(oAdapter);
+                                        listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+                                        listView.setSelection(oAdapter.getCount() - 1);
                                         // Log.d(TAG, document.getId() + " => " + document.getData());
                                     }
                                 } else {

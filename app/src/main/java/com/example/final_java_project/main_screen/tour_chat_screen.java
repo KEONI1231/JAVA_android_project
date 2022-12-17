@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -105,6 +106,8 @@ public class tour_chat_screen extends AppCompatActivity {
                                             listViewData.add(listData);
                                             ListAdapter oAdapter = new CustomTourChatView(listViewData);
                                             listView.setAdapter(oAdapter);
+                                            listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+                                            listView.setSelection(oAdapter.getCount() - 1);
                                             // Log.d(TAG, document.getId() + " => " + document.getData());
                                         }
                                     } else {
@@ -144,7 +147,9 @@ public class tour_chat_screen extends AppCompatActivity {
                                 listViewData.add(listData);
                                 ListAdapter oAdapter = new CustomTourChatView(listViewData);
                                 listView.setAdapter(oAdapter);
-                               // Log.d(TAG, document.getId() + " => " + document.getData());
+                                listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+                                listView.setSelection(oAdapter.getCount() - 1);
+                                // Log.d(TAG, document.getId() + " => " + document.getData());
                             }
                         } else {
                            System.out.println("any Data");
@@ -174,8 +179,12 @@ public class tour_chat_screen extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.send_message:
                 EditText editText = findViewById(R.id.chat_editText);
+
                 text = editText.getText().toString();
                 if (text.equals("//평가하기")) {
+                    editText.setText(null);
+                    InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     CustomDialogStart customDialog;
                     customDialog = new CustomDialogStart(tour_chat_screen.this, 0);
                     customDialog.show();
@@ -229,6 +238,9 @@ public class tour_chat_screen extends AppCompatActivity {
                 else {
                     EditText editText1 = findViewById(R.id.chat_editText);
                     text = editText1.getText().toString();
+                    editText.setText(null);
+                    InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
                     LocalDate now1 = LocalDate.now();
                     LocalTime now2 = LocalTime.now();
@@ -296,6 +308,8 @@ public class tour_chat_screen extends AppCompatActivity {
                                         listViewData.add(listData);
                                         ListAdapter oAdapter = new CustomTourChatView(listViewData);
                                         listView.setAdapter(oAdapter);
+                                        listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+                                        listView.setSelection(oAdapter.getCount() - 1);
                                         // Log.d(TAG, document.getId() + " => " + document.getData());
                                     }
                                 } else {
