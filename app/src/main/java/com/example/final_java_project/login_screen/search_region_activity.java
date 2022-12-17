@@ -13,11 +13,9 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.final_java_project.R;
 import com.example.final_java_project.list_adapter.CustomSearchListView;
 
@@ -51,13 +49,6 @@ public class search_region_activity extends AppCompatActivity {
                 "태국", "토고", "통가", "투르크메니스탄", "투발루", "튀니지", "튀르키예", "트리니다드 토바고", "파나마", "파라과이", "파키스탄", "파푸아뉴기니", "팔라우", "페루", "포르투갈", "폴란드", "프랑스",
                 "피지", "핀란드", "필리핀", "한국", "헝가리"};
         String[] fillterRegion = new String[body_1.length];
-        /*for(int i =0 ; i < fillterRegion.length; i++) {
-            fillterRegion[i] = body_1[i];
-        }
-        for(int i = 0; i < fillterRegion.length; i++) {
-            System.out.println(i + " : " + fillterRegion[i]);
-        }*/
-        //System.out.println(fillterRegion.length);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.search_custom_listview, null);
 
@@ -104,11 +95,10 @@ public class search_region_activity extends AppCompatActivity {
                 for (int i = 0; i < fillterRegion.length; i++) {
                     fillterRegion[i] = null;
                 }
-                //  listViewData.clear();
                 for (int i = 0; i < body_1.length; i++) {
                     if (body_1[i].contains(text)) {
                         fillterRegion[fillterIndex] = body_1[i];
-                        //System.out.println(text);
+
                         if (fillterIndex + 1 <= 193) {
                             fillterIndex = fillterIndex + 1;
                         }

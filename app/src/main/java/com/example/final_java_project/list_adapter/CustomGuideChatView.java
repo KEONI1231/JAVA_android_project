@@ -8,12 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-
 import com.example.final_java_project.R;
-
 import java.util.ArrayList;
 
 public class CustomGuideChatView extends BaseAdapter {
@@ -26,7 +23,6 @@ public class CustomGuideChatView extends BaseAdapter {
         count = listViewData.size();
 
     }
-
     @Override
     public int getCount() {
         return count;
@@ -56,13 +52,11 @@ public class CustomGuideChatView extends BaseAdapter {
         ConstraintLayout toplayout = convertView.findViewById(R.id.gravity_set);
         ConstraintSet constraintSet;
         convertView.setOnTouchListener(new View.OnTouchListener() {
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
 
             }});
-        //mainImage.setImageResource(listViewData.get(position).mainImage);
 
         if (listViewData.get(position).title.equals(listViewData.get(position).id)) {
             constraintSet = new ConstraintSet();
@@ -76,11 +70,8 @@ public class CustomGuideChatView extends BaseAdapter {
             constraintSet.applyTo(toplayout);
         }
 
-
-        //ImageView mainImage = convertView.findViewById(R.id.mainImage);
         TextView title = convertView.findViewById(R.id.title1111);
         TextView body_1 = convertView.findViewById(R.id.body_1);
-
         title.setText(listViewData.get(position).title);
         body_1.setText(listViewData.get(position).body_1);
 

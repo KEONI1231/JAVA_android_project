@@ -3,12 +3,9 @@ package com.example.final_java_project.main_screen;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -19,22 +16,17 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.final_java_project.CustomDialog;
 import com.example.final_java_project.R;
 import com.example.final_java_project.list_adapter.CustomGuideListView;
-import com.example.final_java_project.list_adapter.CustomListView;
 import com.example.final_java_project.setting_screen.guide_main_screen_setting_activity;
-import com.example.final_java_project.setting_screen.tour_main_screen_setting_activity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -43,8 +35,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +45,10 @@ public class guide_main_screen_activity extends AppCompatActivity {
     String guideProfileMessage;
     String guideId;
     String defaultRegion;
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,8 +87,8 @@ public class guide_main_screen_activity extends AppCompatActivity {
                         nameView.setText("이름 : " + document.get("name").toString());
                         guideRegionView.setText("현재 여행지 : " + document.get("guide_region").toString());
                         guideAverView.setText("내 평점 : " + document.get("guide_aver_star").toString());
-                        guideTotalCountView.setText("총 가이드 횟수 : "+document.get("guide_total_count").toString());
-                        guideProfileView.setText("상태메세지 : "+document.get("guide_profile_message").toString());
+                        guideTotalCountView.setText("총 가이드 횟수 : " + document.get("guide_total_count").toString());
+                        guideProfileView.setText("상태메세지 : " + document.get("guide_profile_message").toString());
                     } else {
                         Toast.makeText(getApplicationContext(), "Error 발생", Toast.LENGTH_LONG).show();
                     }
@@ -108,9 +102,6 @@ public class guide_main_screen_activity extends AppCompatActivity {
         List<String> body_1 = new ArrayList<>();
         List<String> nameId = new ArrayList<>();
         int[] fireCnt = {0};
-
-
-        System.out.println(defaultRegion);
         ArrayList<CustomGuideListView.ListData> listViewData = new ArrayList<>();
 
         FirebaseFirestore firestore1 = FirebaseFirestore.getInstance();
@@ -122,16 +113,9 @@ public class guide_main_screen_activity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                //  System.out.println(document.get("guide_region").toString());
-                                System.out.println(document.getData());
-
                                 title.add("고객 이름 : " + document.get("name").toString());
                                 body_1.add("별점 : " + document.get("trip_region").toString());
-
-                                nameId.add( document.get("id").toString());
-                                //System.out.println(body_1.get(fireCnt));
-
-
+                                nameId.add(document.get("id").toString());
                                 CustomGuideListView.ListData listData = new CustomGuideListView.ListData();
                                 listData.title = title.get(fireCnt[0]);
                                 listData.body_2 = body_1.get(fireCnt[0]);
@@ -139,15 +123,11 @@ public class guide_main_screen_activity extends AppCompatActivity {
                                 listViewData.add(listData);
                                 ListAdapter oAdapter = new CustomGuideListView(listViewData);
                                 listView.setAdapter(oAdapter);
-
                                 fireCnt[0]++;
                             }
-
-
                         } else {
                             listViewData.clear();
                             System.out.println("error");
-                            //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
 
@@ -158,16 +138,13 @@ public class guide_main_screen_activity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    //item을 클릭시 id값을 가져와 FrameLayout에 fragment.xml띄우기
                     case R.id.home_tab:
                         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                         List<ActivityManager.RunningTaskInfo> info;
                         info = activityManager.getRunningTasks(1);
+                        if (info.get(0).topActivity.getClassName().equals(guide_main_screen_activity.this.getClass().getName())) {
 
-                        if(info.get(0).topActivity.getClassName().equals(guide_main_screen_activity.this.getClass().getName())) {
-
-                        }
-                        else {
+                        } else {
                             Intent intentGuideLogin =
                                     new Intent(getApplicationContext(),
                                             tour_main_screen_activity.class);
@@ -183,17 +160,13 @@ public class guide_main_screen_activity extends AppCompatActivity {
                         break;
                     case R.id.queston_tab:
                         CustomDialog customDialog;
-                        customDialog = new CustomDialog(guide_main_screen_activity.this,3);
+                        customDialog = new CustomDialog(guide_main_screen_activity.this, 3);
                         customDialog.show();
                         break;
-
                 }
                 return true;
             }
         });
-
-
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -212,7 +185,6 @@ public class guide_main_screen_activity extends AppCompatActivity {
             }
         });
     }
-
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.guide_profile_button:
@@ -225,23 +197,20 @@ public class guide_main_screen_activity extends AppCompatActivity {
                 Intent intentGuideProfile =
                         new Intent(getApplicationContext(),
                                 guide_main_screen_setting_activity.class);
-                intentGuideProfile.putExtra("GuideId",guideId);
+                intentGuideProfile.putExtra("GuideId", guideId);
                 intentGuideProfile.putExtra("GuideName", guideName);
                 intentGuideProfile.putExtra("GuideRegion", guideRegion);
-                intentGuideProfile.putExtra("GuideProfileMsg",guideProfileMessage);
+                intentGuideProfile.putExtra("GuideProfileMsg", guideProfileMessage);
                 launcher.launch(intentGuideProfile);
                 break;
 
             case R.id.queston_button:
                 CustomDialog customDialog;
-                customDialog = new CustomDialog(guide_main_screen_activity.this,3);
+                customDialog = new CustomDialog(guide_main_screen_activity.this, 3);
                 customDialog.show();
                 break;
-
         }
-
     }
-
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -260,14 +229,9 @@ public class guide_main_screen_activity extends AppCompatActivity {
                         regionTextView.setText("현재 거주지 : " + guideRegion);
                         myProfileMsgText.setText("상태메세지 : " + guideProfileMessage);
                         Toast.makeText(getApplicationContext(), "저장되었습니다.", Toast.LENGTH_LONG).show();
-                        //textView.setText("선택한 거주지 : " + result);
-
-
                         ArrayList<CustomGuideListView.ListData> listViewData = new ArrayList<>();
-
                         ListView listView;
                         listView = findViewById(R.id.listview);
-
                         List<String> title = new ArrayList<>();
                         List<String> body_1 = new ArrayList<>();
                         List<String> nameId = new ArrayList<>();
@@ -282,16 +246,9 @@ public class guide_main_screen_activity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                                //  System.out.println(document.get("guide_region").toString());
-                                                System.out.println(document.getData());
-
                                                 title.add("고객 이름 : " + document.get("name").toString());
                                                 body_1.add("별점 : " + document.get("trip_region").toString());
-
-                                                nameId.add( document.get("id").toString());
-                                                //System.out.println(body_1.get(fireCnt));
-
-
+                                                nameId.add(document.get("id").toString());
                                                 CustomGuideListView.ListData listData = new CustomGuideListView.ListData();
                                                 listData.title = title.get(fireCntRe[0]);
                                                 listData.body_2 = body_1.get(fireCntRe[0]);
@@ -299,10 +256,9 @@ public class guide_main_screen_activity extends AppCompatActivity {
                                                 listViewData.add(listData);
                                                 ListAdapter oAdapter = new CustomGuideListView(listViewData);
                                                 listView.setAdapter(oAdapter);
-
                                                 fireCntRe[0]++;
                                             }
-                                            if(fireCntRe[0] == 0) {
+                                            if (fireCntRe[0] == 0) {
                                                 listViewData.clear();
                                                 ListAdapter oAdapter = new CustomGuideListView(listViewData);
                                                 listView.setAdapter(oAdapter);
@@ -318,17 +274,12 @@ public class guide_main_screen_activity extends AppCompatActivity {
                                                     startActivity(intentGuideChat);
                                                 }
                                             });
-
                                         }
                                     }
-
                                 });
                     }
                 }
             });
-
-
-
 }
 
 

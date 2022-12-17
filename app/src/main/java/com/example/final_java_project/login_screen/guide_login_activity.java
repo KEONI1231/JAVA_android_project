@@ -4,16 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.final_java_project.R;
 import com.example.final_java_project.main_screen.guide_main_screen_activity;
-import com.example.final_java_project.main_screen.tour_main_screen_activity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -74,10 +71,8 @@ public class guide_login_activity extends AppCompatActivity {
                             }
                         }
                     });
-
                 }
                 break;
-
         }
     }
 }

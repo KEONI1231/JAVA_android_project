@@ -18,8 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.final_java_project.CustomDialog;
 import com.example.final_java_project.CustomDialogStart;
 import com.example.final_java_project.R;
 import com.example.final_java_project.list_adapter.CustomTourChatView;
@@ -43,9 +41,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class tour_chat_screen extends AppCompatActivity {
     Handler mHandler;
     String tourId;
@@ -60,8 +55,6 @@ public class tour_chat_screen extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tour_chat);
-
-
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.first_screen_appbar);
@@ -70,20 +63,10 @@ public class tour_chat_screen extends AppCompatActivity {
         mHandler = new Handler();
         tourId = getIntent().getStringExtra("TourId");
         guideId = getIntent().getStringExtra("guideId");
-        System.out.println(tourId+guideId);
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount = 0.8f;
         getWindow().setAttributes(layoutParams);
-
-        /*
-        String[] title = {"김건휘(가이드)", "나", "김건휘(가이드)", "나", "김건휘(가이드)","김건휘(가이드)","나","김건휘(가이드)", "김건휘(가이드)"};
-
-        String[] body_1 = {"안녕하세요 건휘님ㅎㅎ", "네 안녕하세요 가이드님", "어떤걸 도와드릴까요?",
-                "미케해변 주변에 자리를 잡았는데\n이 주변에 현지인들 많이 가는술집이 있나요?", "아네 그 주변에 좋은 술집 많아요!!", "일단 그 주변에 칵테일 바가 있는데\n" +
-                "여행객들도 많이 없고 거의 현지인들만 가요", "분위기가 많이 시끌시끌 한가요?","아니요 분위기는 많이 안시끄러워요ㅎㅎ", "치안도 좋아서 안심하셔도 됩니다"};
-
-         */
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final DocumentReference docRef = db.collection("cities").document();
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -101,10 +84,8 @@ public class tour_chat_screen extends AppCompatActivity {
                     Intent intent = getIntent(); //인텐트
                     startActivity(intent); //액티비티 열기
                     overridePendingTransition(0, 0);//인텐트 효과 없애기
-                    //Log.d(TAG, "Current data: " + snapshot.getData());
                 } else {
 
-                    // Log.d(TAG, "Current data: null");
                 }
             }
         });
@@ -193,7 +174,6 @@ public class tour_chat_screen extends AppCompatActivity {
                         public void onPositiveClicked(int addr) {
                             starTotalStar += addr;
                             starAverage = Double.parseDouble(String.valueOf(starTotalStar / (guideTotalCount + 1)));
-                            System.out.println(starAverage);
                             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
                             DocumentReference washingtonRef = firestore.collection("guide_user").document(guideId);
                             washingtonRef

@@ -3,6 +3,7 @@ package com.example.final_java_project.setting_screen;
 import static com.example.final_java_project.R.id;
 import static com.example.final_java_project.R.layout;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,9 +24,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.final_java_project.R;
 import com.example.final_java_project.login_screen.search_region_activity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -40,25 +44,38 @@ public class guide_main_screen_setting_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(layout.main_setting_appbar);
-
         Intent getIntent = getIntent();
         String name = getIntent.getStringExtra("GuideName");
         String region = getIntent.getStringExtra("GuideRegion");
-        String profileMsg = getIntent.getStringExtra("GuideProfileMsg");
         guideId = getIntent.getStringExtra("GuideId");
-
         TextView nameTextView = findViewById(R.id.guide_name_text);
         TextView regionTextView = findViewById(R.id.guide_region_text);
-        TextView profileMsgTextView = findViewById(id.profile_message);
-
-        System.out.println(guideId);
-        System.out.println(name);
-        System.out.println(region);
-        System.out.println(profileMsg);
         nameTextView.setText(name);
         regionTextView.setText(region);
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        DocumentReference docRef = firestore.collection("guide_user").document(guideId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        TextView guideAverView = findViewById(R.id.guide_aver_score);
+                        TextView guideTotalCountView = findViewById(R.id.guide_total_counting);
+                        TextView guideProfileView = findViewById(R.id.profile_message);
 
-
+                        guideAverView.setText("내 평점 : " + document.get("guide_aver_star").toString());
+                        guideTotalCountView.setText("총 가이드 횟수 : " + document.get("guide_total_count").toString());
+                        guideProfileView.setText("상태메세지 : " + document.get("guide_profile_message").toString());
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Error 발생", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error 발생", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
     public void onButtonClick(View view) {
         EditText nameEditText =(EditText) findViewById(R.id.guide_name_editText);
@@ -79,7 +96,6 @@ public class guide_main_screen_setting_activity extends AppCompatActivity {
                     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
                     DocumentReference washingtonRef = firestore.collection("guide_user").document(guideId);
 
-// Set the "isCapital" field of the city 'DC'
                     washingtonRef
                             .update("name", newName, "guide_profile_message", newProfileMsg,"guide_region",result)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {

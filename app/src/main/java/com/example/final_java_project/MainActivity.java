@@ -1,22 +1,13 @@
 package com.example.final_java_project;
-import static com.example.final_java_project.backend.HttpWebSocket.WEB_SOCKET_URL;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-
-import com.example.final_java_project.backend.HttpWebSocket;
 import com.example.final_java_project.login_screen.guide_login_activity;
 import com.example.final_java_project.login_screen.signup_acivity;
 import com.example.final_java_project.login_screen.tourist_login_activity;
-import com.example.final_java_project.main_screen.guide_main_screen_activity;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -44,29 +35,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.mainImage:
                 CustomDialog customDialog;
-                customDialog = new CustomDialog(MainActivity.this,0);
+                customDialog = new CustomDialog(MainActivity.this, 0);
                 customDialog.show();
                 break;
             case R.id.sign_up_btn:
                 Intent intentSignUp = new Intent(getApplicationContext(), signup_acivity.class);
                 startActivity(intentSignUp);
                 break;
-        }
-
-    }
-    public void sendWebSocket() {
-        try {
-            OkHttpClient client = new OkHttpClient();
-
-            Request request = new Request.Builder().url(WEB_SOCKET_URL).build();
-
-            client.newWebSocket(request, HttpWebSocket.listener).send("테스트 메시지!");
-
-            client.dispatcher().executorService().shutdown();
-
-        }catch(Exception e) {
-            Log.e("TLOG", "MAIN 소켓 통신 오류 : " + e.toString());
-
         }
 
     }

@@ -4,13 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
 public class CustomDialogStart extends Dialog {
@@ -30,7 +26,6 @@ public class CustomDialogStart extends Dialog {
     public void setDialogListener(CustomDialogStartListener customDialogListener){
         this.customDialogListener = customDialogListener;
     }
-    //private CustomDialogStartListener customDialogListener;
     public CustomDialogStart(@NonNull Context context, int case_number) {
         super(context);
         setContentView(R.layout.star_dialog);

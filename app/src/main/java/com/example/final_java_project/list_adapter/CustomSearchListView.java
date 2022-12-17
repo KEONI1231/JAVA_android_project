@@ -6,11 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.example.final_java_project.R;
-
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class CustomSearchListView extends BaseAdapter {
     LayoutInflater layoutInflater = null;

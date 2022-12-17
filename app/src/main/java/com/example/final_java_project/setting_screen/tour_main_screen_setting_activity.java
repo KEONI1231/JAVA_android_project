@@ -39,16 +39,12 @@ public class tour_main_screen_setting_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(layout.main_setting_appbar);
-
         Intent getIntent = getIntent();
         String name = getIntent.getStringExtra("Name");
         String region = getIntent.getStringExtra("Region");
-        //String period = getIntent.getStringExtra("Period");
         tourId = getIntent.getStringExtra("TourId");
         TextView nameTextView = findViewById(id.user_name_text);
         TextView regionTextView = findViewById(id.user_region_text);
-        System.out.println(tourId);
-
         nameTextView.setText(name);
         regionTextView.setText(region);
     }
@@ -58,7 +54,6 @@ public class tour_main_screen_setting_activity extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.try_change_info:
-
                 Intent intent = new Intent();
                 if (nameEditText.getText().toString().length() == 0) {
                     Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_LONG).show();
@@ -73,20 +68,16 @@ public class tour_main_screen_setting_activity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    //Log.d(TAG, "DocumentSnapshot successfully updated!");
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    //Log.w(TAG, "Error updating document", e);
                                 }
                             });
                     String newName = nameEditText.getText().toString();
-
                     String newRegion = result;
                     intent.putExtra("NewName", newName);
-
                     intent.putExtra("NewRegion", newRegion);
                     setResult(RESULT_OK, intent);
                     finish();
@@ -112,9 +103,7 @@ public class tour_main_screen_setting_activity extends AppCompatActivity {
                         TextView textView = findViewById(R.id.my_region_text);
                         textView.setText(result);
                         textView.setVisibility(View.VISIBLE);
-
                     }
                 }
             });
-
 }

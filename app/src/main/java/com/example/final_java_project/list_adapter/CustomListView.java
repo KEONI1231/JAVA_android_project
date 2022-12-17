@@ -65,7 +65,6 @@ public class CustomListView extends BaseAdapter
         mainImage.setImageResource(listViewData.get(position).mainImage);
         title.setText(listViewData.get(position).title);
         body_1.setText(listViewData.get(position).body_1);
-        //System.out.println(listViewData.get(position).body_1);
         body_2.setText(listViewData.get(position).body_2);
         body_3.setText(listViewData.get(position).body_3);
 

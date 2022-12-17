@@ -56,7 +56,6 @@ public class CustomTourChatView extends BaseAdapter {
         LinearLayout titleLayout = convertView.findViewById(R.id.item_title_layout);
         ConstraintLayout toplayout = convertView.findViewById(R.id.gravity_set);
         ConstraintSet constraintSet;
-        //mainImage.setImageResource(listViewData.get(position).mainImage);
         convertView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

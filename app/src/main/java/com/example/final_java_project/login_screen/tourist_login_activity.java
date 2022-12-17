@@ -1,18 +1,14 @@
 package com.example.final_java_project.login_screen;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.final_java_project.R;
 import com.example.final_java_project.main_screen.tour_main_screen_activity;
 import com.google.android.gms.tasks.OnCompleteListener;

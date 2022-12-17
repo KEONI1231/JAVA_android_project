@@ -3,10 +3,7 @@ package com.example.final_java_project.main_screen;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,14 +11,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -30,18 +24,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.final_java_project.CustomDialog;
-import com.example.final_java_project.MainActivity;
 import com.example.final_java_project.R;
 import com.example.final_java_project.list_adapter.CustomListView;
-import com.example.final_java_project.login_screen.guide_login_activity;
-import com.example.final_java_project.login_screen.signup_acivity;
-import com.example.final_java_project.login_screen.tourist_login_activity;
 import com.example.final_java_project.setting_screen.tour_main_screen_setting_activity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
@@ -49,9 +36,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,10 +62,8 @@ public class tour_main_screen_activity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.first_screen_appbar);
         ListView listView;
         listView = findViewById(R.id.listview);
-
         tourId = getIntent().getStringExtra("TourId");
         defaultTripRegion = getIntent().getStringExtra("TripRegion");
-
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         DocumentReference docRef = firestore.collection("tour_user").document(tourId);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -95,15 +77,12 @@ public class tour_main_screen_activity extends AppCompatActivity {
                         nameView.setText("이름 : " + document.get("name").toString());
                         tripRegionView.setText("현재 여행지 : " + document.get("trip_region").toString());
                     } else {
-                        //Toast.makeText(getApplicationContext(), "id또는 pw가 일치하지 않습니다..", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "에러 발생. 네트워크 체크 요망", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount = 0.8f;
@@ -113,14 +92,11 @@ public class tour_main_screen_activity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    //item을 클릭시 id값을 가져와 FrameLayout에 fragment.xml띄우기
                     case R.id.home_tab:
                         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                         List<ActivityManager.RunningTaskInfo> info;
                         info = activityManager.getRunningTasks(1);
-
                         if(info.get(0).topActivity.getClassName().equals(tour_main_screen_activity.this.getClass().getName())) {
-
                         }
                         else {
                             Intent intentGuideLogin =
@@ -141,7 +117,6 @@ public class tour_main_screen_activity extends AppCompatActivity {
                         customDialog = new CustomDialog(tour_main_screen_activity.this, 1);
                         customDialog.show();
                         break;
-
                 }
                 return true;
             }
@@ -162,9 +137,6 @@ public class tour_main_screen_activity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                //  System.out.println(document.get("guide_region").toString());
-                                //System.out.println(document.getData());
-
                                 title.add("이름 : " + document.get("name") + "              " +
                                         "                                                  " +
                                         "                                                  " +
@@ -180,7 +152,6 @@ public class tour_main_screen_activity extends AppCompatActivity {
                                 body_2.add((String) document.get("guide_region"));
                                 body_3.add((String) document.get("guide_profile_message"));
                                 guideIdChat.add((String) document.get("id"));
-                                //System.out.println(body_1.get(fireCnt));
                                 int[] id = {R.drawable.character_icon};
 
                                 CustomListView.ListData listData = new CustomListView.ListData();
@@ -193,21 +164,15 @@ public class tour_main_screen_activity extends AppCompatActivity {
                                 listViewData.add(listData);
                                 ListAdapter oAdapter = new CustomListView(listViewData);
                                 listView.setAdapter(oAdapter);
-
                                 fireCnt[0]++;
                             }
-
-
                         } else {
                             listViewData.clear();
                             System.out.println("error");
-                            //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
 
                 });
-
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -247,9 +212,6 @@ public class tour_main_screen_activity extends AppCompatActivity {
                 intentMyProfile.putExtra("Region", myTripRegion);
                 intentMyProfile.putExtra("Period", myTripPeriod);
                 launcher.launch(intentMyProfile);
-                //finish();
-                //startActivity(new Intent(tour_main_screen_activity.this, tour_main_screen_activity.class));
-
                 break;
         }
     }
@@ -293,16 +255,12 @@ public class tour_main_screen_activity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                                //  System.out.println(document.get("guide_region").toString());
-                                                //System.out.println(document.getData());
-
                                                     title.add(document.get("name").toString());
                                                     body_1.add("별점 : " + document.get("guide_aver_star").toString() + " / "
                                                             + "가이드 수 : " + document.get("guide_total_count").toString());
                                                     body_2.add(document.get("guide_region").toString());
                                                     body_3.add(document.get("guide_profile_message").toString());
                                                     guideIdChat1.add((String) document.get("id"));
-                                                    System.out.println(body_1.get(fireCntRe[0]));
                                                     int[] id = {R.drawable.character_icon};
                                                     CustomListView.ListData listData = new CustomListView.ListData();
                                                     listData.mainImage = id[0];
@@ -333,13 +291,9 @@ public class tour_main_screen_activity extends AppCompatActivity {
                                                     startActivity(intentGuideLogin);
                                                 }
                                             });
-
-
                                         }
                                     }
-
                                 });
-
                     }
                 }
             });
