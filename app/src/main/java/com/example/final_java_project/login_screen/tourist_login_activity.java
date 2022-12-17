@@ -41,7 +41,6 @@ public class tourist_login_activity extends AppCompatActivity {
         final String[] firestoreId = {""};
         final String[] firestorePw = {""};
         final String[] myRegion = {""};
-        final boolean[] chatState = {false};
         switch (view.getId()) {
             case R.id.login_try_btn:
                 if(idEditText.getText().toString().length() == 0 || pwEditText.getText().toString().length() == 0) {
@@ -58,7 +57,6 @@ public class tourist_login_activity extends AppCompatActivity {
                                 if (document.exists()) {
                                     firestoreId[0] = document.get("id").toString();
                                     firestorePw[0] = document.get("pw").toString();
-                                    chatState[0] = (boolean) document.get("chat_state");
                                     myRegion[0] = document.get("trip_region").toString();
                                     if(firestoreId[0].equals(id) && firestorePw[0].equals(pw)) {
                                         Toast.makeText(getApplicationContext(), "로그인 성공",Toast.LENGTH_LONG).show();
@@ -66,7 +64,6 @@ public class tourist_login_activity extends AppCompatActivity {
                                                 tour_main_screen_activity.class);
                                         intentTourLogin.putExtra("TourId",idEditText.getText().toString());
                                         intentTourLogin.putExtra("TripRegion",myRegion[0]);
-                                        intentTourLogin.putExtra("TourChatState",chatState[0]);
                                         startActivity(intentTourLogin);
                                     }
                                     else {

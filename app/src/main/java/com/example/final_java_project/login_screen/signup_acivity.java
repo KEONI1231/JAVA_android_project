@@ -111,7 +111,7 @@ public class signup_acivity extends AppCompatActivity {
                                         city.put("pw", pwText);
                                         city.put("name", nameText);
                                         city.put("trip_region", "");
-                                        city.put("chat_state", false);
+
                                         firestore.collection("tour_user").document(idText)
                                                 .set(city)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {

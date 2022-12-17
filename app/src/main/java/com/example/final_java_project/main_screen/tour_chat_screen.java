@@ -1,30 +1,24 @@
 package com.example.final_java_project.main_screen;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.final_java_project.CustomDialog;
 import com.example.final_java_project.CustomDialogStart;
 import com.example.final_java_project.R;
 import com.example.final_java_project.list_adapter.CustomTourChatView;
@@ -33,24 +27,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketAddress;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -60,10 +42,6 @@ import java.util.Map;
 
 public class tour_chat_screen extends AppCompatActivity {
     Handler mHandler;
-    Socket socket;
-    PrintWriter sendWriter;
-    String ip = "211.62.179.135";
-    int port = 8080;
     String tourId;
     String guideId;
     int fireCnt = 0;
@@ -150,16 +128,40 @@ public class tour_chat_screen extends AppCompatActivity {
             case R.id.send_message:
                 EditText editText = findViewById(R.id.chat_editText);
                 text = editText.getText().toString();
-                if (text.equals("//chat-server-clear")) {
+                if (text.equals("//평가하기")) {
                     CustomDialogStart customDialog;
                     customDialog = new CustomDialogStart(tour_chat_screen.this, 0);
                     String star = "";
+
+                    customDialog.setDialogListener(new CustomDialogStart.CustomDialogStartListener() {
+                        @Override
+                        public void onPositiveClicked(int addr) {
+                            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+                            DocumentReference washingtonRef = firestore.collection("guide_user").document(guideId);
+                            washingtonRef
+                                    .update("guide_total_count", FieldValue.increment(1))
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            //Log.d(TAG, "DocumentSnapshot successfully updated!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            //Log.w(TAG, "Error updating document", e);
+                                        }
+                                    });
+                        }
+
+
+                    });
                     customDialog.show();
-              //      System.out.println(text);
+
                     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-                    DocumentReference washingtonRef = firestore.collection("tour_user").document(tourId);
+                    DocumentReference washingtonRef = firestore.collection("guide_user").document(guideId);
                     washingtonRef
-                            .update("chat_state", false)
+                            .update("guide_total_count", FieldValue.increment(1))
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -199,10 +201,8 @@ public class tour_chat_screen extends AppCompatActivity {
                                 }
                             });
                 }
-
                 ListView listView;
                 listView = findViewById(R.id.listview);
-
                 List<String> title = new ArrayList<>();
                 List<String> body_1 = new ArrayList<>();
                 FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -233,10 +233,6 @@ public class tour_chat_screen extends AppCompatActivity {
                                 }
                             }
                         });
-
-
-
-
                 break;
         }
     }

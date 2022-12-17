@@ -2,10 +2,12 @@ package com.example.final_java_project.main_screen;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -60,8 +62,11 @@ public class tour_main_screen_activity extends AppCompatActivity {
     String myTripRegion;
     String myTripPeriod;
     String tourId;
-    boolean chatState;
-    int fireCnt = 0;
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
 
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
@@ -76,7 +81,6 @@ public class tour_main_screen_activity extends AppCompatActivity {
 
         tourId = getIntent().getStringExtra("TourId");
         defaultTripRegion = getIntent().getStringExtra("TripRegion");
-        chatState = getIntent().getBooleanExtra("TourChatState",false);
         System.out.println(tourId);
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -112,18 +116,26 @@ public class tour_main_screen_activity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     //item을 클릭시 id값을 가져와 FrameLayout에 fragment.xml띄우기
                     case R.id.home_tab:
-                        Intent intentGuideLogin =
-                                new Intent(getApplicationContext(),
-                                        tour_main_screen_activity.class);
-                        startActivity(intentGuideLogin);
+                        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                        List<ActivityManager.RunningTaskInfo> info;
+                        info = activityManager.getRunningTasks(1);
 
+                        if(info.get(0).topActivity.getClassName().equals(tour_main_screen_activity.this.getClass().getName())) {
+
+                        }
+                        else {
+                            Intent intentGuideLogin =
+                                    new Intent(getApplicationContext(),
+                                            tour_main_screen_activity.class);
+                            startActivity(intentGuideLogin);
+                        }
                         break;
                     case R.id.chat_tab:
-                        Intent intentTourChat =
-                                new Intent(getApplicationContext(),
-                                        tour_chat_screen.class);
-                        intentTourChat.putExtra("TourId", tourId);
-                        startActivity(intentTourChat);
+                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/KEONI1231/JAVA_android_project"));
+                        startActivity(myIntent);
+                        break;
+                    case R.id.exit_tab:
+                        android.os.Process.killProcess(android.os.Process.myPid());
                         break;
                     case R.id.queston_tab:
                         CustomDialog customDialog;
@@ -140,6 +152,7 @@ public class tour_main_screen_activity extends AppCompatActivity {
         List<String> body_2 = new ArrayList<>();
         List<String> body_3 = new ArrayList<>();
         List<String> guideIdChat = new ArrayList<>();
+        int[] fireCnt = {0};
         ArrayList<CustomListView.ListData> listViewData = new ArrayList<>();
         FirebaseFirestore firestore1 = FirebaseFirestore.getInstance();
         firestore1.collection("guide_user")
@@ -153,41 +166,29 @@ public class tour_main_screen_activity extends AppCompatActivity {
                                 //  System.out.println(document.get("guide_region").toString());
                                 //System.out.println(document.getData());
 
-                                if(chatState == true) {
-                                    title.add("이미 진행중인 채팅이 존재합니다.");
-                                    body_1.add("채팅탭에서 진행중인 채팅을 종료해주세요");
-                                    CustomListView.ListData listData = new CustomListView.ListData();
-                                    listData.title = title.get(fireCnt);
-                                    listData.body_1 = body_1.get(fireCnt);
-                                    listViewData.add(listData);
-                                    ListAdapter oAdapter = new CustomListView(listViewData);
-                                    listView.setAdapter(oAdapter);
+                                title.add("이름 : " + document.get("name") + "             ");
+                                body_1.add((String) ("별점 : " + document.get("guide_aver_star") + " / "
+                                        + "가이드 수 : " + document.get("guide_total_star")));
+                                body_2.add((String) document.get("guide_region"));
+                                body_3.add((String) document.get("guide_profile_message"));
+                                guideIdChat.add((String) document.get("id"));
+                                //System.out.println(body_1.get(fireCnt));
+                                int[] id = {R.drawable.character_icon};
 
-                                }
-                                else {
-                                    title.add("이름 : " + document.get("name") + "             ");
-                                    body_1.add((String) ("별점 : " + document.get("guide_aver_star") + " / "
-                                            + "가이드 수 : " + document.get("guide_total_star")));
-                                    body_2.add((String) document.get("guide_region"));
-                                    body_3.add((String) document.get("guide_profile_message"));
-                                    guideIdChat.add((String) document.get("id"));
-                                    //System.out.println(body_1.get(fireCnt));
-                                    int[] id = {R.drawable.character_icon};
+                                CustomListView.ListData listData = new CustomListView.ListData();
+                                listData.mainImage = id[0];
+                                listData.title = title.get(fireCnt[0]);
+                                listData.body_1 = body_1.get(fireCnt[0]);
+                                listData.body_2 = body_2.get(fireCnt[0]);
+                                listData.body_3 = body_3.get(fireCnt[0]);
+                                listData.id = guideIdChat.get(fireCnt[0]);
+                                listViewData.add(listData);
+                                ListAdapter oAdapter = new CustomListView(listViewData);
+                                listView.setAdapter(oAdapter);
 
-                                    CustomListView.ListData listData = new CustomListView.ListData();
-                                    listData.mainImage = id[0];
-                                    listData.title = title.get(fireCnt);
-                                    listData.body_1 = body_1.get(fireCnt);
-                                    listData.body_2 = body_2.get(fireCnt);
-                                    listData.body_3 = body_3.get(fireCnt);
-                                    listData.id = guideIdChat.get(fireCnt);
-                                    listViewData.add(listData);
-                                    ListAdapter oAdapter = new CustomListView(listViewData);
-                                    listView.setAdapter(oAdapter);
-
-                                    fireCnt++;
-                                }
+                                fireCnt[0]++;
                             }
+
 
                         } else {
                             listViewData.clear();
@@ -202,33 +203,15 @@ public class tour_main_screen_activity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(chatState == false) {
-                    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-                    DocumentReference washingtonRef = firestore.collection("tour_user").document(tourId);
-                    washingtonRef
-                            .update("chat_state", true)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    //Log.d(TAG, "DocumentSnapshot successfully updated!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    //Log.w(TAG, "Error updating document", e);
-                                }
-                            });
-                    String guideIdChatIntent = listViewData.get(position).id;
+                String guideIdChatIntent = listViewData.get(position).id;
+                Intent intentGuideLogin =
+                        new Intent(getApplicationContext(),
+                                tour_chat_screen.class);
+                intentGuideLogin.putExtra("TourId", tourId);
+                intentGuideLogin.putExtra("guideId", guideIdChatIntent);
 
-                    Intent intentGuideLogin =
-                            new Intent(getApplicationContext(),
-                                    tour_chat_screen.class);
-                    intentGuideLogin.putExtra("TourId", tourId);
-                    intentGuideLogin.putExtra("guideId", guideIdChatIntent);
+                startActivity(intentGuideLogin);
 
-                    startActivity(intentGuideLogin);
-                }
             }
         });
         listView.setOnTouchListener(new View.OnTouchListener() {
@@ -267,8 +250,6 @@ public class tour_main_screen_activity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult data) {
-
-
                     Log.d("TAG", "data : " + data);
                     if (data.getResultCode() == Activity.RESULT_OK) {
                         Intent intent = data.getData();
@@ -283,7 +264,6 @@ public class tour_main_screen_activity extends AppCompatActivity {
                         regionTextView.setText("현재 여행지 : " + myTripRegion);
                         Toast.makeText(getApplicationContext(), "저장되었습니다.", Toast.LENGTH_LONG).show();
 
-
                         int[] fireCntRe = {0};
                         ListView listView;
                         listView = findViewById(R.id.listview);
@@ -291,10 +271,12 @@ public class tour_main_screen_activity extends AppCompatActivity {
                         List<String> body_1 = new ArrayList<>();
                         List<String> body_2 = new ArrayList<>();
                         List<String> body_3 = new ArrayList<>();
+                        List<String> guideIdChat1 = new ArrayList<>();
                         ArrayList<CustomListView.ListData> listViewData = new ArrayList<>();
 
                         FirebaseFirestore firestore1 = FirebaseFirestore.getInstance();
                         listViewData.clear();
+                        fireCntRe[0] = 0;
                         firestore1.collection("guide_user")
                                 .whereEqualTo("guide_region", defaultTripRegion)
                                 .get()
@@ -305,28 +287,47 @@ public class tour_main_screen_activity extends AppCompatActivity {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                 //  System.out.println(document.get("guide_region").toString());
                                                 //System.out.println(document.getData());
-                                                title.add(document.get("name").toString());
-                                                body_1.add("별점 : " + document.get("guide_aver_star").toString() + " / "
-                                                        + "가이드 수 : " + document.get("guide_total_star").toString());
-                                                body_2.add(document.get("guide_region").toString());
-                                                body_3.add(document.get("guide_profile_message").toString());
-                                                System.out.println(body_1.get(fireCntRe[0]));
-                                                int[] id = {R.drawable.character_icon};
-                                                CustomListView.ListData listData = new CustomListView.ListData();
-                                                listData.mainImage = id[0];
-                                                listData.title = title.get(fireCntRe[0]);
-                                                listData.body_1 = body_1.get(fireCntRe[0]);
-                                                listData.body_2 = body_2.get(fireCntRe[0]);
-                                                listData.body_3 = body_3.get(fireCntRe[0]);
-                                                listViewData.add(listData);
-                                                fireCntRe[0]++;
+
+                                                    title.add(document.get("name").toString());
+                                                    body_1.add("별점 : " + document.get("guide_aver_star").toString() + " / "
+                                                            + "가이드 수 : " + document.get("guide_total_star").toString());
+                                                    body_2.add(document.get("guide_region").toString());
+                                                    body_3.add(document.get("guide_profile_message").toString());
+                                                    guideIdChat1.add((String) document.get("id"));
+                                                    System.out.println(body_1.get(fireCntRe[0]));
+                                                    int[] id = {R.drawable.character_icon};
+                                                    CustomListView.ListData listData = new CustomListView.ListData();
+                                                    listData.mainImage = id[0];
+                                                    listData.title = title.get(fireCntRe[0]);
+                                                    listData.body_1 = body_1.get(fireCntRe[0]);
+                                                    listData.body_2 = body_2.get(fireCntRe[0]);
+                                                    listData.body_3 = body_3.get(fireCntRe[0]);
+                                                    listData.id = guideIdChat1.get(fireCntRe[0]);
+                                                    listViewData.add(listData);
+                                                    fireCntRe[0]++;
+                                                    ListAdapter oAdapter = new CustomListView(listViewData);
+                                                    listView.setAdapter(oAdapter);
+                                            }
+                                            if(fireCntRe[0] == 0) {
+                                                listViewData.clear();
                                                 ListAdapter oAdapter = new CustomListView(listViewData);
                                                 listView.setAdapter(oAdapter);
                                             }
-                                        } else {
-                                            listViewData.clear();
-                                            System.out.println("error");
-                                            //Log.d(TAG, "Error getting documents: ", task.getException());
+                                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                @Override
+                                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                    String guideIdChatIntent = listViewData.get(position).id;
+                                                    Intent intentGuideLogin =
+                                                            new Intent(getApplicationContext(),
+                                                                    tour_chat_screen.class);
+                                                    intentGuideLogin.putExtra("TourId", tourId);
+                                                    intentGuideLogin.putExtra("guideId", guideIdChatIntent);
+                                                    startActivity(intentGuideLogin);
+                                                }
+                                            });
+                                            System.out.println(fireCntRe[0]);
+
+
                                         }
                                     }
 

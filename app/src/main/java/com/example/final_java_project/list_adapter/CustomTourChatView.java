@@ -63,7 +63,7 @@ public class CustomTourChatView extends BaseAdapter {
 
             }});
         if (listViewData.get(position).title.equals(listViewData.get(position).id)) {
-            listViewData.get(position).title = "[ 나 ]";
+            listViewData.get(position).title = "< 나 >";
             constraintSet = new ConstraintSet();
             constraintSet.clone(toplayout);
             constraintSet.connect(toplayout.getId(), ConstraintSet.RIGHT, titleLayout.getId(), ConstraintSet.RIGHT, 0);

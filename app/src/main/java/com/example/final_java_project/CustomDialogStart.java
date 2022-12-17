@@ -22,11 +22,15 @@ public class CustomDialogStart extends Dialog {
     RadioGroup radioGroup;
     Button shutdownClick;
     int star_number = 0;
+    private CustomDialogStartListener customDialogListener;
     public interface CustomDialogStartListener{
-        static void clickBtn(String data) {
+        void onPositiveClicked(int star);
 
-        }
     }
+    public void setDialogListener(CustomDialogStartListener customDialogListener){
+        this.customDialogListener = customDialogListener;
+    }
+    //private CustomDialogStartListener customDialogListener;
     public CustomDialogStart(@NonNull Context context, int case_number) {
         super(context);
         setContentView(R.layout.star_dialog);
@@ -48,7 +52,7 @@ public class CustomDialogStart extends Dialog {
                     Toast.makeText(context.getApplicationContext(), "가이드 평점을 등록해주세요.", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    CustomDialogStartListener.clickBtn("clicked");
+                    customDialogListener.onPositiveClicked(star_number);
                     dismiss();
                 }
             }
