@@ -256,7 +256,7 @@ public class tour_chat_screen extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     //finish();
-                                    Toast.makeText(getApplicationContext(), "전송완료", Toast.LENGTH_LONG).show();
+
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

@@ -174,7 +174,7 @@ public class guide_chat_screen extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(getApplicationContext(), "전송 완료", Toast.LENGTH_LONG).show();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
