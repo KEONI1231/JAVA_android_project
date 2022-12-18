@@ -2,10 +2,8 @@ package com.example.final_java_project.main_screen;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -79,7 +77,6 @@ public class tour_chat_screen extends AppCompatActivity {
                     //Log.w(TAG, "Listen failed.", e);
                     return;
                 }
-
                 if (snapshot != null && snapshot.exists()) {
                     ListView listView;
                     listView = findViewById(R.id.listview);
@@ -116,14 +113,12 @@ public class tour_chat_screen extends AppCompatActivity {
                                 }
                             });
                 } else {
-
                 }
             }
         });
 
         List<String> title = new ArrayList<>();
         List<String> body_1 = new ArrayList<>();
-
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.tour_chat_custom_listview, null);
         ArrayList<CustomTourChatView.ListData> listViewData = new ArrayList<>();
@@ -161,7 +156,6 @@ public class tour_chat_screen extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String clickName = listViewData.get(position).title;
-
             }
         });
         listView.setOnTouchListener(new View.OnTouchListener() {
@@ -170,8 +164,6 @@ public class tour_chat_screen extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
 
     public void onButtonClick(View view) throws JSONException {

@@ -269,7 +269,7 @@ public class guide_main_screen_activity extends AppCompatActivity {
                                                     String nameId = listViewData.get(position).Id;
                                                     Intent intentGuideChat = new Intent(getApplicationContext(),
                                                             guide_chat_screen.class);
-                                                    intentGuideChat.putExtra("TourId", nameId);
+                                                    intentGuideChat.putExtra("tourId", nameId);
                                                     intentGuideChat.putExtra("GuideId", guideId);
                                                     startActivity(intentGuideChat);
                                                 }
